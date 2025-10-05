@@ -1,0 +1,134 @@
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.card {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  background-color: #2c5282;
+  color: white;
+  padding: 24px 32px;
+  border-bottom: 3px solid #1a365d;
+}
+
+.headerTitle {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.headerSubtitle {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.formContent {
+  padding: 32px;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.formField {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 6px;
+}
+
+.labelUnit {
+  color: #4a5568;
+  font-weight: 400;
+}
+
+.required {
+  color: #e53e3e;
+}
+
+.input,
+.select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 3px;
+  font-size: 15px;
+  box-sizing: border-box;
+}
+
+.input {
+  width: 100%;
+}
+
+.inputError,
+.selectError {
+  border: 2px solid #e53e3e;
+}
+
+.errorText {
+  color: #e53e3e;
+  font-size: 12px;
+  margin-top: 4px;
+  display: block;
+}
+
+.buttonContainer {
+  border-top: 1px solid #e2e8f0;
+  padding-top: 24px;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.buttonReset {
+  padding: 12px 32px;
+  background-color: white;
+  color: #2d3748;
+  border: 1px solid #cbd5e0;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.buttonReset:hover {
+  background-color: #f7fafc;
+}
+
+.buttonSubmit {
+  padding: 12px 32px;
+  background-color: #2c5282;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s;
+}
+
+.buttonSubmit:hover {
+  background-color: #2a4365;
+}
+
+.buttonReset:active,
+.buttonSubmit:active {
+  transform: translateY(1px);
+}
