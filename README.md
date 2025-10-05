@@ -8,7 +8,7 @@ Need the following installed:
 ### Step-by-Step Installation
 
 - Clone the repository
-- Navigate to the project directory in a terminal (cd .../diabetes-predictor).
+- Navigate to the project directory in a terminal (cd .../DiabetesPredictor).
 - Run 'npm install' to download packages.
 - Run 'npm run dev' to run site locally.
 - Navigate to link provided in a browser. For example "http://localhost:5173".
