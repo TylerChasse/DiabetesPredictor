@@ -332,29 +332,6 @@ const Dashboard = () => {
           ))}
         </div>
       </section>
-
-      <section>
-        <h2 className={styles.sectionTitle}>AVAILABLE FEATURES ({analytics.featureNames.length})</h2>
-        <div className={styles.featureList}>
-          {analytics.featureNames.map((feature, idx) => (
-            <div key={idx} className={styles.featureTag}>
-              {feature}
-            </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Debug section - remove this after testing */}
-      {debugInfo && (
-        <details style={{ marginTop: '32px', padding: '16px', backgroundColor: '#f7fafc', border: '1px solid #e2e8f0' }}>
-          <summary style={{ cursor: 'pointer', fontWeight: '600', marginBottom: '8px' }}>
-            Debug Info (for development - remove later)
-          </summary>
-          <pre style={{ fontSize: '12px', overflow: 'auto' }}>
-            {JSON.stringify(debugInfo, null, 2)}
-          </pre>
-        </details>
-      )}
     </div>
   );
 };
