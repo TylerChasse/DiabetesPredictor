@@ -1,9 +1,11 @@
+/* Container */
 .container {
   display: flex;
   flex-direction: column;
   gap: 32px;
 }
 
+/* Section Headers */
 .sectionTitle {
   font-size: 20px;
   font-weight: 600;
@@ -12,6 +14,12 @@
   border-bottom: 3px solid #2c5282;
   padding-bottom: 8px;
   display: inline-block;
+}
+
+.sectionSubtitle {
+  font-size: 14px;
+  color: #4a5568;
+  margin: 8px 0 16px 0;
 }
 
 /* Metadata Grid */
@@ -26,6 +34,11 @@
   background-color: white;
   border: 1px solid #e2e8f0;
   padding: 20px;
+  transition: box-shadow 0.2s;
+}
+
+.metadataCard:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .metadataLabel {
@@ -34,6 +47,7 @@
   color: #4a5568;
   text-transform: uppercase;
   margin-bottom: 8px;
+  letter-spacing: 0.5px;
 }
 
 .metadataValue {
@@ -59,7 +73,16 @@
 .analysisTitle {
   font-size: 16px;
   font-weight: 600;
+  color: #2d3748;
   margin-bottom: 16px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 8px;
+}
+
+.analysisSubtitle {
+  font-size: 13px;
+  color: #718096;
+  margin-bottom: 12px;
 }
 
 .analysisRatio {
@@ -67,8 +90,14 @@
   font-weight: 700;
   color: #2c5282;
   margin-bottom: 16px;
+  padding: 16px;
+  background-color: #edf2f7;
+  border: 1px solid #cbd5e0;
+  text-align: center;
+  border-radius: 4px;
 }
 
+/* Distribution List */
 .distributionList {
   display: flex;
   flex-direction: column;
@@ -80,6 +109,7 @@
   justify-content: space-between;
   padding: 12px;
   border: 1px solid;
+  border-radius: 4px;
 }
 
 .distributionNegative {
@@ -92,6 +122,7 @@
   border-color: #feb2b2;
 }
 
+/* Correlation List */
 .correlationList {
   display: flex;
   flex-direction: column;
@@ -104,6 +135,58 @@
   padding: 12px;
   background-color: #ebf8ff;
   border: 1px solid #90cdf4;
+  border-radius: 4px;
+}
+
+.highCorrelation {
+  color: #2c5282;
+  font-size: 16px;
+}
+
+/* Imbalance Metrics */
+.imbalanceMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.metricRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background-color: #f7fafc;
+  border-left: 4px solid #4299e1;
+  border-radius: 4px;
+}
+
+.metricLabel {
+  font-size: 14px;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.metricValue {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a365d;
+}
+
+.metricPercent {
+  font-size: 14px;
+  font-weight: 500;
+  color: #4a5568;
+}
+
+.imbalanceNote {
+  font-size: 13px;
+  color: #4a5568;
+  padding: 12px;
+  background-color: #edf2f7;
+  border-radius: 4px;
+  margin-top: 12px;
+  line-height: 1.5;
 }
 
 /* Visualizations */
@@ -123,6 +206,7 @@
 .visualizationTitle {
   font-size: 15px;
   font-weight: 600;
+  color: #2d3748;
   margin-bottom: 16px;
 }
 
@@ -131,6 +215,7 @@
   border: 1px solid #cbd5e0;
   padding: 60px 24px;
   text-align: center;
+  border-radius: 4px;
 }
 
 .chartIcon {
@@ -148,6 +233,30 @@
   font-size: 12px;
   color: #718096;
   margin-top: 8px;
+}
+
+/* Feature List */
+.featureList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.featureTag {
+  background-color: #ebf8ff;
+  color: #2c5282;
+  padding: 8px 16px;
+  border-radius: 16px;
+  font-size: 13px;
+  font-weight: 500;
+  border: 1px solid #90cdf4;
+  transition: all 0.2s;
+}
+
+.featureTag:hover {
+  background-color: #bee3f8;
+  transform: translateY(-1px);
 }
 
 /* Loading State */
@@ -171,44 +280,25 @@
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
-/* Error State */
-.errorContainer {
-  background-color: #fff5f5;
-  border: 2px solid #feb2b2;
-  padding: 32px;
-  border-radius: 8px;
-  text-align: center;
+.loadingText {
+  font-size: 16px;
+  color: #4a5568;
+  margin: 16px 0 8px 0;
+  font-weight: 500;
 }
 
-.errorContainer h2 {
-  color: #c53030;
-  margin-bottom: 16px;
-}
-
-.errorContainer p {
-  color: #742a2a;
-  margin-bottom: 8px;
-}
-
-.errorHint {
-  font-size: 14px;
-  font-family: monospace;
-  background-color: #fed7d7;
-  padding: 12px;
-  border-radius: 4px;
+.loadingHint {
+  font-size: 13px;
+  color: #718096;
   margin-top: 16px;
 }
 
-.errorHint code {
-  background-color: #fc8181;
-  padding: 2px 6px;
-  border-radius: 3px;
-}
-
-/* Add these new styles */
+/* Progress Bar */
 .progressBar {
   width: 300px;
   height: 8px;
@@ -231,33 +321,44 @@
   margin: 8px 0;
 }
 
-.loadingText {
-  font-size: 16px;
-  color: #4a5568;
-  margin: 16px 0 8px 0;
+/* Error State */
+.errorContainer {
+  background-color: #fff5f5;
+  border: 2px solid #feb2b2;
+  padding: 32px;
+  border-radius: 8px;
+  text-align: center;
+  max-width: 800px;
+  margin: 40px auto;
 }
 
-.loadingHint {
-  font-size: 13px;
-  color: #718096;
-  margin-top: 16px;
+.errorContainer h2 {
+  color: #c53030;
+  margin-bottom: 16px;
+  font-size: 24px;
 }
 
-.sectionSubtitle {
+.errorContainer p {
+  color: #742a2a;
+  margin-bottom: 8px;
+  line-height: 1.6;
+}
+
+.errorHint {
   font-size: 14px;
-  color: #4a5568;
-  margin: 8px 0 16px 0;
+  font-family: 'Courier New', monospace;
+  background-color: #fed7d7;
+  padding: 12px;
+  border-radius: 4px;
+  margin-top: 16px;
+  text-align: left;
 }
 
-.analysisSubtitle {
-  font-size: 13px;
-  color: #718096;
-  margin-bottom: 12px;
-}
-
-.highCorrelation {
-  color: #2c5282;
-  font-size: 16px;
+.errorHint code {
+  background-color: #fc8181;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 600;
 }
 
 .errorDetails {
@@ -270,6 +371,13 @@
   font-weight: 600;
   color: #c53030;
   margin-bottom: 8px;
+  padding: 8px;
+  background-color: #fed7d7;
+  border-radius: 4px;
+}
+
+.errorDetails summary:hover {
+  background-color: #fecaca;
 }
 
 .errorDetails pre {
@@ -279,29 +387,44 @@
   border-radius: 4px;
   overflow-x: auto;
   font-size: 12px;
+  line-height: 1.5;
+  max-height: 400px;
+  overflow-y: auto;
 }
 
-/* Feature List */
-.featureList {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.featureTag {
-  background-color: #ebf8ff;
-  color: #2c5282;
-  padding: 8px 16px;
-  border-radius: 16px;
-  font-size: 13px;
-  font-weight: 500;
-  border: 1px solid #90cdf4;
-}
-
+/* Utility */
 .noData {
   color: #718096;
   font-style: italic;
   padding: 12px;
   text-align: center;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .metadataGrid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 12px;
+  }
+
+  .analysisGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .visualizationGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .metadataValue {
+    font-size: 24px;
+  }
+
+  .analysisRatio {
+    font-size: 20px;
+  }
+
+  .featureTag {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
 }
