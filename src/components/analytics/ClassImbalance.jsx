@@ -20,8 +20,6 @@ const ClassImbalance = ({ metadata, analytics }) => {
     ? ((classDistribution.positive / totalRecords) * 100).toFixed(2)
     : '0';
 
-  const isBalanced = parseFloat(ratio) <= 2;
-
   return (
     <AnalyticsCard title="Class Imbalance Analysis">
       <div className={styles.imbalanceMetrics}>

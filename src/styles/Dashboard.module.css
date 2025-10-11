@@ -428,3 +428,67 @@
     padding: 6px 12px;
   }
 }
+
+/* Age Binned Table */
+.ageBinnedTable {
+  margin-top: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 12px;
+  background-color: #2c5282;
+  color: white;
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.tableRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #e2e8f0;
+  font-size: 14px;
+}
+
+.tableRow:last-child {
+  border-bottom: none;
+}
+
+.tableRow:hover {
+  background-color: #f7fafc;
+}
+
+.tableCell {
+  display: flex;
+  align-items: center;
+}
+
+/* Chart Subtitle */
+.chartSubtitle {
+  font-size: 13px;
+  color: #718096;
+  margin-top: -8px;
+  margin-bottom: 16px;
+}
+
+/* Chart Insight */
+.chartInsight {
+  margin-top: 16px;
+  padding: 12px;
+  background-color: #ebf8ff;
+  border-left: 4px solid #4299e1;
+  border-radius: 4px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.chartInsight strong {
+  color: #2c5282;
+}

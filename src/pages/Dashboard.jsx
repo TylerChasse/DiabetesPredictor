@@ -32,7 +32,7 @@ const Dashboard = () => {
         
         const response = await fetch('/data/diabetes_health_indicators_split.csv');
         if (!response.ok) {
-          throw new Error('Failed to load dataset. Make sure dataset.csv is in public/data/');
+          throw new Error('Failed to load dataset.');
         }
         
         setProgress(30);
@@ -58,7 +58,7 @@ const Dashboard = () => {
         const allColumns = results.meta.fields || Object.keys(data[0]);
         const targetVar = allColumns.find(col => 
           col.toLowerCase().includes('diabetes')
-        ) || 'Diabetes';
+        ) || 'Diabetic';
         
         const featureNames = allColumns.filter(col => col !== targetVar);
         const totalRecords = data.length;
@@ -95,6 +95,65 @@ const Dashboard = () => {
             value: corr.toFixed(3)
           };
         }).sort((a, b) => Math.abs(parseFloat(b.value)) - Math.abs(parseFloat(a.value)));
+
+        // Calculate age-binned positive rates
+        const calculateAgeBinnedRisk = () => {
+          // Age mapping (based on CDC BRFSS codebook)
+          const ageLabels = {
+            1: '18-24',
+            2: '25-29',
+            3: '30-34',
+            4: '35-39',
+            5: '40-44',
+            6: '45-49',
+            7: '50-54',
+            8: '55-59',
+            9: '60-64',
+            10: '65-69',
+            11: '70-74',
+            12: '75-79',
+            13: '80+'
+          };
+
+          const ageBins = {};
+          
+          // Initialize bins
+          for (let i = 1; i <= 13; i++) {
+            ageBins[i] = {
+              ageLabel: ageLabels[i],
+              total: 0,
+              positive: 0,
+              negative: 0
+            };
+          }
+
+          // Count data points in each bin
+          data.forEach(row => {
+            const age = row.Age;
+            const outcome = row[targetVar];
+            
+            if (age >= 1 && age <= 13 && (outcome === 0 || outcome === 1 || outcome === 2)) {
+              ageBins[age].total++;
+              if (outcome === 1 || outcome === 2) {
+                ageBins[age].positive++;
+              } else {
+                ageBins[age].negative++;
+              }
+            }
+          });
+
+          // Calculate positive rates
+          const ageBinnedData = Object.values(ageBins)
+            .filter(bin => bin.total > 0) // Only include bins with data
+            .map(bin => ({
+              ...bin,
+              positiveRate: (bin.positive / bin.total) * 100
+            }));
+
+          return ageBinnedData;
+        };
+
+        const ageBinnedData = calculateAgeBinnedRisk();
         
         // Calculate imbalance metrics
         const imbalanceRatio = classDistribution.positive > 0 
@@ -119,7 +178,8 @@ const Dashboard = () => {
             ratio: imbalanceRatio,
             negativeCount: classDistribution.negative,
             positiveCount: classDistribution.positive
-          }
+          },
+          ageBinnedData
         });
         
         setProgress(100);
@@ -189,9 +249,6 @@ const Dashboard = () => {
         <div className={styles.errorContainer}>
           <h2>⚠️ Error Loading Data</h2>
           <p>{error}</p>
-          <p className={styles.errorHint}>
-            Make sure <code>public/data/dataset.csv</code> exists and is properly formatted.
-          </p>
         </div>
       </div>
     );
