@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../../styles/Dashboard.module.css';
-import AnalyticsCard from './AnalyticsCard';
 
 const ClassImbalance = ({ metadata, analytics }) => {
   const { totalRecords, classDistribution } = metadata;
@@ -21,7 +20,8 @@ const ClassImbalance = ({ metadata, analytics }) => {
     : '0';
 
   return (
-    <AnalyticsCard title="Class Imbalance Analysis">
+    <div className={styles.analysisCard}>
+      <h3 className={styles.analysisTitle}>Class Imbalance Analysis</h3>
       <div className={styles.imbalanceMetrics}>
         <div className={styles.metricRow}>
           <span className={styles.metricLabel}>Imbalance Ratio:</span>
@@ -53,7 +53,7 @@ const ClassImbalance = ({ metadata, analytics }) => {
           </span>
         </div>
       </div>
-    </AnalyticsCard>
+    </div>
   );
 };
 

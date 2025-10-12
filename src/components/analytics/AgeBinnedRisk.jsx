@@ -1,15 +1,16 @@
 import React from 'react';
 import styles from '../../styles/Dashboard.module.css';
-import AnalyticsCard from './AnalyticsCard';
 
 const AgeBinnedRisk = ({ analytics }) => {
   const { ageBinnedData } = analytics;
 
   if (!ageBinnedData || ageBinnedData.length === 0) {
     return (
-      <AnalyticsCard title="Age-Binned Diabetes Risk" subtitle="Risk distribution across age groups">
+      <div className={styles.analysisCard}>
+        <h3 className={styles.analysisTitle}>Age-Binned Diabetes Risk</h3>
+        <p className={styles.analysisSubtitle}>Risk distribution across age groups</p>
         <p className={styles.noData}>Calculating age-binned risk rates...</p>
-      </AnalyticsCard>
+      </div>
     );
   }
 
@@ -22,22 +23,10 @@ const AgeBinnedRisk = ({ analytics }) => {
     bin.positiveRate < min.positiveRate ? bin : min
   , ageBinnedData[0]);
 
-  // Calculate average risk
-  const avgRisk = (ageBinnedData.reduce((sum, bin) => sum + bin.positiveRate, 0) / ageBinnedData.length).toFixed(2);
-
-  // Calculate risk trend (increasing/decreasing)
-  const firstHalfAvg = ageBinnedData.slice(0, Math.floor(ageBinnedData.length / 2))
-    .reduce((sum, bin) => sum + bin.positiveRate, 0) / Math.floor(ageBinnedData.length / 2);
-  const secondHalfAvg = ageBinnedData.slice(Math.floor(ageBinnedData.length / 2))
-    .reduce((sum, bin) => sum + bin.positiveRate, 0) / Math.ceil(ageBinnedData.length / 2);
-  const trend = secondHalfAvg > firstHalfAvg ? 'increases' : 'decreases';
-  const trendPercent = Math.abs(((secondHalfAvg - firstHalfAvg) / firstHalfAvg) * 100).toFixed(1);
-
   return (
-    <AnalyticsCard 
-      title="Age-Binned Diabetes Risk" 
-      subtitle="Diabetes prevalence across age categories"
-    >
+    <div className={styles.analysisCard}>
+      <h3 className={styles.analysisTitle}>Age-Binned Diabetes Risk</h3>
+      <p className={styles.analysisSubtitle}>Diabetes prevalence across age categories</p>
       <div className={styles.imbalanceMetrics}>        
         <div className={styles.metricRow}>
           <span className={styles.metricLabel}>Highest Risk Age Group:</span>
@@ -59,7 +48,7 @@ const AgeBinnedRisk = ({ analytics }) => {
         <div className={styles.tableHeader}>
           <span>Age Group</span>
           <span>Total</span>
-          <span>Diabetic/Prediabetic</span>
+          <span>Diabetic/<br></br>Prediabetic</span>
           <span>Rate</span>
         </div>
         {ageBinnedData.map((bin, idx) => (
@@ -73,7 +62,7 @@ const AgeBinnedRisk = ({ analytics }) => {
           </div>
         ))}
       </div>
-    </AnalyticsCard>
+    </div>
   );
 };
 

@@ -12,3 +12,13 @@ Need the following installed:
 - Run 'npm install' to download packages.
 - Run 'npm run dev' to run site locally.
 - Navigate to link provided in a browser. For example "http://localhost:5173".
+
+### Updating Analytics/Visualizations
+
+- Calculation functions that handle the data directly can be added to utils/DataAnalysis.js
+- Call these functions in the anaylzeData() function within DataAnalysis.js
+  and return the results in the analytics object so that they can be used in Dashboard.jsx
+- The results (metadata and analytics) get passed from Dashboard.jsx to AnalyticsSecton.jsx
+  and VisualizationsSection.jsx
+- AnalyticsSection and VisualizationsSection then pass this data to the individual analytics
+  and visualizations for use
