@@ -32,7 +32,7 @@ const Dashboard = () => {
         setProgress(10);
         
         // Fetch CSV file
-        const response = await fetch('/data/diabetes_health_indicators_split.csv');
+        const response = await fetch('/diabetes_health.csv');
         if (!response.ok) {
           throw new Error('Failed to load dataset.');
         }
