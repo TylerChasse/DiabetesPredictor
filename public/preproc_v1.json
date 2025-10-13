@@ -1,0 +1,389 @@
+{
+  "numeric": [
+    "BMI",
+    "MentHlth",
+    "PhysHlth",
+    "Age"
+  ],
+  "categorical": [
+    "HeartDiseaseorAttack",
+    "HighBP",
+    "HighChol",
+    "CholCheck",
+    "Smoker",
+    "Stroke",
+    "PhysActivity",
+    "Fruits",
+    "Veggies",
+    "HvyAlcoholConsump",
+    "AnyHealthcare",
+    "NoDocbcCost",
+    "GenHlth",
+    "DiffWalk",
+    "Sex",
+    "Education",
+    "Income"
+  ],
+  "numeric_imputation": {
+    "BMI": 27.0,
+    "MentHlth": 0.0,
+    "PhysHlth": 0.0,
+    "Age": 8.0
+  },
+  "numeric_ranges_train": {
+    "BMI": {
+      "min": 12.0,
+      "max": 95.0
+    },
+    "MentHlth": {
+      "min": 0.0,
+      "max": 30.0
+    },
+    "PhysHlth": {
+      "min": 0.0,
+      "max": 30.0
+    },
+    "Age": {
+      "min": 1.0,
+      "max": 13.0
+    }
+  },
+  "categorical_vocabulary": {
+    "HeartDiseaseorAttack": [
+      0,
+      1
+    ],
+    "HighBP": [
+      0,
+      1
+    ],
+    "HighChol": [
+      0,
+      1
+    ],
+    "CholCheck": [
+      0,
+      1
+    ],
+    "Smoker": [
+      0,
+      1
+    ],
+    "Stroke": [
+      0,
+      1
+    ],
+    "PhysActivity": [
+      0,
+      1
+    ],
+    "Fruits": [
+      0,
+      1
+    ],
+    "Veggies": [
+      0,
+      1
+    ],
+    "HvyAlcoholConsump": [
+      0,
+      1
+    ],
+    "AnyHealthcare": [
+      0,
+      1
+    ],
+    "NoDocbcCost": [
+      0,
+      1
+    ],
+    "GenHlth": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "DiffWalk": [
+      0,
+      1
+    ],
+    "Sex": [
+      0,
+      1
+    ],
+    "Education": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "Income": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8
+    ]
+  },
+  "final_feature_order": [
+    {
+      "source": "BMI",
+      "kind": "numeric"
+    },
+    {
+      "source": "MentHlth",
+      "kind": "numeric"
+    },
+    {
+      "source": "PhysHlth",
+      "kind": "numeric"
+    },
+    {
+      "source": "Age",
+      "kind": "numeric"
+    },
+    {
+      "source": "HeartDiseaseorAttack",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "HeartDiseaseorAttack",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "HighBP",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "HighBP",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "HighChol",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "HighChol",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "CholCheck",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "CholCheck",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Smoker",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "Smoker",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Stroke",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "Stroke",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "PhysActivity",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "PhysActivity",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Fruits",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "Fruits",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Veggies",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "Veggies",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "HvyAlcoholConsump",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "HvyAlcoholConsump",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "AnyHealthcare",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "AnyHealthcare",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "NoDocbcCost",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "NoDocbcCost",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "GenHlth",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "GenHlth",
+      "kind": "onehot",
+      "category": 2
+    },
+    {
+      "source": "GenHlth",
+      "kind": "onehot",
+      "category": 3
+    },
+    {
+      "source": "GenHlth",
+      "kind": "onehot",
+      "category": 4
+    },
+    {
+      "source": "GenHlth",
+      "kind": "onehot",
+      "category": 5
+    },
+    {
+      "source": "DiffWalk",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "DiffWalk",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Sex",
+      "kind": "onehot",
+      "category": 0
+    },
+    {
+      "source": "Sex",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 2
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 3
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 4
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 5
+    },
+    {
+      "source": "Education",
+      "kind": "onehot",
+      "category": 6
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 1
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 2
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 3
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 4
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 5
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 6
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 7
+    },
+    {
+      "source": "Income",
+      "kind": "onehot",
+      "category": 8
+    }
+  ],
+  "preproc_version": "v1",
+  "trained_on": "2025-10-12"
+}
