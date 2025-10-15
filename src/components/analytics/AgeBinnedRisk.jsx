@@ -62,6 +62,19 @@ const AgeBinnedRisk = ({ analytics }) => {
           </div>
         ))}
       </div>
+
+      <div style={{ 
+        marginTop: '16px', 
+        padding: '12px', 
+        backgroundColor: '#fef2f2', 
+        borderRadius: '8px',
+        borderLeft: '4px solid #f56565'
+      }}>
+        <p style={{ margin: 0, fontSize: '14px', color: '#991b1b' }}>
+          <strong>Key Insight: </strong>
+          The {highestRisk.ageLabel} age group shows the highest risk at {highestRisk.positiveRate.toFixed(1)}%.
+        </p>
+      </div>
     </div>
   );
 };

@@ -101,9 +101,7 @@ const AgeSmokingRisk = ({ analytics }) => {
       }}>
         <p style={{ margin: 0, fontSize: '14px', color: '#991b1b' }}>
           <strong>Key Insight:</strong> Smokers have a {riskIncrease}% higher diabetes rate 
-          ({relativeRisk}x relative risk). The highest risk age group is {highestRiskAge.label} 
-          at {highestRiskAge.rate.toFixed(1)}%, while {lowestRiskAge.label} has the lowest 
-          risk at {lowestRiskAge.rate.toFixed(1)}%.
+          ({relativeRisk}x relative risk).
         </p>
       </div>
     </div>

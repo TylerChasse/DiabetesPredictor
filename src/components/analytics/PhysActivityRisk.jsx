@@ -86,6 +86,31 @@ const PhysActivityImpact = ({ analytics }) => {
           </span>
         </div>
       </div>
+
+      <div style={{ 
+        marginTop: '16px', 
+        padding: '12px', 
+        backgroundColor: '#f0fdf4', 
+        borderRadius: '8px',
+        borderLeft: '4px solid #48bb78'
+      }}>
+        <p style={{ margin: 0, fontSize: '14px', color: '#166534' }}>
+          <strong>Key Insight:</strong> Physical activity shows a positive effect with a {riskReduction.toFixed(2)}% 
+          lower risk rate. 
+        </p>
+      </div>
+
+      <div style={{ 
+        marginTop: '16px', 
+        padding: '12px', 
+        backgroundColor: '#fef2f2', 
+        borderRadius: '8px',
+        borderLeft: '4px solid #f56565'
+      }}>
+        <p style={{ margin: 0, fontSize: '14px', color: '#991b1b' }}>
+          <strong>Key Insight:</strong> Inactive people have {relativeRisk.toFixed(2)}x the risk.
+        </p>
+      </div>
     </div>
   );
 };

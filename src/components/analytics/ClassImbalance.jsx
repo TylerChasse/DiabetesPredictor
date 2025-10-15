@@ -53,6 +53,19 @@ const ClassImbalance = ({ metadata, analytics }) => {
           </span>
         </div>
       </div>
+
+      <div style={{ 
+        marginTop: '16px', 
+        padding: '12px', 
+        backgroundColor: '#fffbeb', 
+        borderRadius: '8px',
+        borderLeft: '4px solid #f59e0b'
+      }}>
+        <p style={{ margin: 0, fontSize: '14px', color: '#92400e' }}>
+          <strong>Key Insight:</strong> The dataset shows a {ratio}:1 imbalance with {negativePercent}% 
+          non-diabetic cases. This inbalance should be considered when analyzing findings.
+        </p>
+      </div>
     </div>
   );
 };
