@@ -4,7 +4,7 @@ import styles from '../styles/Dashboard.module.css';
 import MetadataSection from '../components/MetadataSection';
 import AnalyticsSection from '../components/analytics/AnalyticsSection';
 import VisualizationsSection from '../components/visualizations/VisualizationsSection';
-import { analyzeData } from '../utils/dataAnalysis';
+import { analyzeData } from '../utils/DataAnalysis';
 
 const Dashboard = () => {
   const [metadata, setMetadata] = useState({

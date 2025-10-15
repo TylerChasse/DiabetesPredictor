@@ -20,17 +20,16 @@ const MosaicPlot = ({ analytics }) => {
   const { ageGroups, smokingCategories, totalRecords } = mosaicData;
 
   // Calculate proportions for mosaic layout
-  const width = 1100;
+  const width = 1300;
   const height = 420;
   const margin = { top: 30, right: 150, bottom: 60, left: 100 };
   const plotWidth = width - margin.left - margin.right;
   const plotHeight = height - margin.top - margin.bottom;
 
-  // Colors for diabetes status
+  // Colors for diabetes status (2 categories now)
   const colors = {
     'Non-Diabetic': '#48bb78',
-    'Prediabetic': '#f6ad55',
-    'Diabetic': '#f56565'
+    'Diabetic/Prediabetic': '#f56565'
   };
 
   // Calculate column widths (based on age group proportions)
@@ -56,7 +55,7 @@ const MosaicPlot = ({ analytics }) => {
 
       // Stack diabetes outcomes within each smoking category
       let segmentY = currentY;
-      ['Non-Diabetic', 'Prediabetic', 'Diabetic'].forEach(outcome => {
+      ['Non-Diabetic', 'Diabetic/Prediabetic'].forEach(outcome => {
         const count = categoryData.byOutcome[outcome] || 0;
         const segmentHeight = (count / categoryData.total) * categoryHeight;
         

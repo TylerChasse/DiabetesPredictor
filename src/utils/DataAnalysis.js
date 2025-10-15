@@ -251,11 +251,11 @@ export const calculateMosaicData = (data, targetVar) => {
       bySmokingStatus: {
         'Non-Smoker': {
           total: 0,
-          byOutcome: { 'Non-Diabetic': 0, 'Prediabetic': 0, 'Diabetic': 0 }
+          byOutcome: { 'Non-Diabetic': 0, 'Diabetic/Prediabetic': 0 }
         },
         'Smoker': {
           total: 0,
-          byOutcome: { 'Non-Diabetic': 0, 'Prediabetic': 0, 'Diabetic': 0 }
+          byOutcome: { 'Non-Diabetic': 0, 'Diabetic/Prediabetic': 0 }
         }
       }
     };
@@ -276,10 +276,13 @@ export const calculateMosaicData = (data, targetVar) => {
     const ageLabel = ageLabels[age];
     const smokingStatus = smoker === 1 ? 'Smoker' : 'Non-Smoker';
     
+    // Combine prediabetic and diabetic into one category
     let outcomeLabel;
-    if (outcome === 0) outcomeLabel = 'Non-Diabetic';
-    else if (outcome === 1) outcomeLabel = 'Diabetic';
-    else outcomeLabel = 'Prediabetic';
+    if (outcome === 0) {
+      outcomeLabel = 'Non-Diabetic';
+    } else {
+      outcomeLabel = 'Diabetic/Prediabetic'; // Combine outcome 1 and 2
+    }
 
     mosaicStructure[ageLabel].total++;
     mosaicStructure[ageLabel].bySmokingStatus[smokingStatus].total++;
