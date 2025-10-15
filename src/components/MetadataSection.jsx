@@ -2,17 +2,27 @@ import React from 'react';
 import styles from '../styles/Dashboard.module.css';
 
 const MetadataSection = ({ metadata }) => {
+  const negativePercent = metadata.totalRecords > 0 
+    ? ((metadata.classDistribution.negative / metadata.totalRecords) * 100).toFixed(2)
+    : '0';
+  
+  const positivePercent = metadata.totalRecords > 0 
+    ? ((metadata.classDistribution.positive / metadata.totalRecords) * 100).toFixed(2)
+    : '0';
+
   const metadataItems = [
     { label: 'Total Records', value: metadata.totalRecords.toLocaleString() },
     { label: 'Features', value: metadata.features },
     { label: 'Target Variable', value: metadata.targetVariable },
-    { label: 'Negative Cases', value: metadata.classDistribution.negative.toLocaleString() },
-    { label: 'Positive Cases', value: metadata.classDistribution.positive.toLocaleString() },
     { 
-      label: 'Positive Rate', 
-      value: metadata.totalRecords > 0 
-        ? `${((metadata.classDistribution.positive / metadata.totalRecords) * 100).toFixed(2)}%` 
-        : '0%' 
+      label: 'Negative Cases', 
+      value: metadata.classDistribution.negative.toLocaleString(),
+      subValue: `(${negativePercent}%)`
+    },
+    { 
+      label: 'Positive Cases', 
+      value: metadata.classDistribution.positive.toLocaleString(),
+      subValue: `(${positivePercent}%)`
     },
     { label: 'Missing Values', value: metadata.missingValues.toLocaleString() },
   ];
@@ -27,7 +37,19 @@ const MetadataSection = ({ metadata }) => {
         {metadataItems.map((item, idx) => (
           <div key={idx} className={styles.metadataCard}>
             <div className={styles.metadataLabel}>{item.label}</div>
-            <div className={styles.metadataValue}>{item.value}</div>
+            <div className={styles.metadataValue}>
+              {item.value}
+              {item.subValue && (
+                <span style={{ 
+                  fontSize: '22px', 
+                  fontWeight: '400', 
+                  marginLeft: '8px',
+                  color: '#718096'
+                }}>
+                  {item.subValue}
+                </span>
+              )}
+            </div>
           </div>
         ))}
       </div>
