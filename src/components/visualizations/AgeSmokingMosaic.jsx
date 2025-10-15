@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../../styles/Dashboard.module.css';
 
-const MosaicPlot = ({ analytics }) => {
+const AgeSmokingMosaic = ({ analytics }) => {
   const { mosaicData } = analytics;
 
   if (!mosaicData || !mosaicData.ageGroups || mosaicData.ageGroups.length === 0) {
@@ -258,4 +258,4 @@ const MosaicPlot = ({ analytics }) => {
   );
 };
 
-export default MosaicPlot;
+export default AgeSmokingMosaic;
