@@ -219,6 +219,86 @@ export const calculateKeyCorrelations = (data, featureNames, targetVar) => {
 };
 
 /**
+ * Calculate mosaic plot data for age groups and smoking status with diabetes outcomes
+ */
+export const calculateMosaicData = (data, targetVar) => {
+  // Age group mapping (detailed 13 bins)
+  const ageLabels = {
+    1: '18-24',
+    2: '25-29',
+    3: '30-34',
+    4: '35-39',
+    5: '40-44',
+    6: '45-49',
+    7: '50-54',
+    8: '55-59',
+    9: '60-64',
+    10: '65-69',
+    11: '70-74',
+    12: '75-79',
+    13: '80+'
+  };
+
+  const smokingCategories = ['Non-Smoker', 'Smoker'];
+
+  // Initialize data structure
+  const mosaicStructure = {};
+  for (let i = 1; i <= 13; i++) {
+    const ageLabel = ageLabels[i];
+    mosaicStructure[ageLabel] = {
+      label: ageLabel,
+      total: 0,
+      bySmokingStatus: {
+        'Non-Smoker': {
+          total: 0,
+          byOutcome: { 'Non-Diabetic': 0, 'Prediabetic': 0, 'Diabetic': 0 }
+        },
+        'Smoker': {
+          total: 0,
+          byOutcome: { 'Non-Diabetic': 0, 'Prediabetic': 0, 'Diabetic': 0 }
+        }
+      }
+    };
+  }
+
+  let totalRecords = 0;
+
+  // Populate data
+  data.forEach(row => {
+    const age = row.Age;
+    const smoker = row.Smoker;
+    const outcome = row[targetVar];
+
+    if (!age || age < 1 || age > 13) return;
+    if (smoker !== 0 && smoker !== 1) return;
+    if (outcome !== 0 && outcome !== 1 && outcome !== 2) return;
+
+    const ageLabel = ageLabels[age];
+    const smokingStatus = smoker === 1 ? 'Smoker' : 'Non-Smoker';
+    
+    let outcomeLabel;
+    if (outcome === 0) outcomeLabel = 'Non-Diabetic';
+    else if (outcome === 1) outcomeLabel = 'Diabetic';
+    else outcomeLabel = 'Prediabetic';
+
+    mosaicStructure[ageLabel].total++;
+    mosaicStructure[ageLabel].bySmokingStatus[smokingStatus].total++;
+    mosaicStructure[ageLabel].bySmokingStatus[smokingStatus].byOutcome[outcomeLabel]++;
+    totalRecords++;
+  });
+
+  // Convert to array and filter empty groups
+  const ageGroups = Object.values(mosaicStructure)
+    .filter(group => group.total > 0);
+
+  return {
+    ageGroups,
+    smokingCategories,
+    totalRecords
+  };
+};
+
+/**
  * Main analysis orchestrator - runs all calculations
  */
 export const analyzeData = (data, allColumns, targetVar, featureNames) => {
@@ -231,6 +311,7 @@ export const analyzeData = (data, allColumns, targetVar, featureNames) => {
   const correlations = calculateKeyCorrelations(data, featureNames, targetVar);
   const ageBinnedData = calculateAgeBinnedRisk(data, targetVar);
   const physActivityData = calculatePhysActivityImpact(data, targetVar);
+  const mosaicData = calculateMosaicData(data, targetVar);
   
   // Calculate imbalance metrics
   const imbalanceRatio = classDistribution.positive > 0 
@@ -256,7 +337,8 @@ export const analyzeData = (data, allColumns, targetVar, featureNames) => {
         positiveCount: classDistribution.positive
       },
       ageBinnedData,
-      physActivityData
+      physActivityData,
+      mosaicData
     }
   };
 };

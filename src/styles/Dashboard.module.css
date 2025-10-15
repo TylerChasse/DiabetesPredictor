@@ -492,3 +492,7 @@
 .chartInsight strong {
   color: #2c5282;
 }
+
+.visualizationCardWide {
+  grid-column: span 2;  /* Takes 2 column slots */
+}
