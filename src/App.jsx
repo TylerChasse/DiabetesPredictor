@@ -21,7 +21,7 @@ function App() {
       <footer style={{ backgroundColor: '#1a365d', color: 'white', padding: '32px 24px', marginTop: 'auto' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto', textAlign: 'center' }}>
           <p style={{ margin: '0 0 8px 0', fontSize: '14px', opacity: 0.9 }}>
-            © 2025 Diabetes Risk Predictor. For educational purposes.
+            For educational purposes only.
           </p>
         </div>
       </footer>
