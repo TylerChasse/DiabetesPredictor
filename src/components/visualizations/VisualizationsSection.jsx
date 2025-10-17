@@ -1,17 +1,17 @@
 import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import styles from '../../styles/VisualizationsSection.module.css';
 import AgeBinnedChart from './AgeBinnedChart';
 import PhysActivityChart from './PhysActivityChart';
 import AgeSmokingMosaic from './AgeSmokingMosaic';
 
-const VisualizationsSection = ({ analytics }) => {
+const VisualizationsSection = () => {
   return (
     <section>
       <h2 className={styles.sectionTitle}>DATA VISUALIZATIONS</h2>
       <div className={styles.visualizationGrid}>
-        <AgeBinnedChart analytics={analytics} />
-        <PhysActivityChart analytics={analytics} />
-        <AgeSmokingMosaic analytics={analytics} />
+        <AgeBinnedChart />
+        <PhysActivityChart />
+        <AgeSmokingMosaic />
         {/* Add more visualizations here*/}
       </div>
     </section>

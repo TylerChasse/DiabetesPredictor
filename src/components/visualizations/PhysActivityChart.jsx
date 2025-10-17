@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { 
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, 
   ResponsiveContainer
 } from 'recharts';
-import styles from '../../styles/Dashboard.module.css';
+import styles from '../../styles/VisualizationsSection.module.css';
+import { calculatePhysActivityImpact } from '../../utils/DataAnalysis';
 
-const PhysActivityChart = ({ analytics }) => {
-  const { physActivityData } = analytics;
+const PhysActivityChart = () => {
+  const physActivityData = useMemo(() => calculatePhysActivityImpact(), []);
 
   if (!physActivityData) {
     return (

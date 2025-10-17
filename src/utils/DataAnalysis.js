@@ -3,12 +3,85 @@
  * 
  * Contains all calculation functions for analyzing diabetes health indicators dataset
  */
+import Papa from 'papaparse';
+
+let csvPath = 'diabetes_health.csv'
+let targetVar = 'Diabetes';
+let cachedData = null;
+let cachedMetadata = null;
+let ageLabels = {
+    1: '18-24',
+    2: '25-29',
+    3: '30-34',
+    4: '35-39',
+    5: '40-44',
+    6: '45-49',
+    7: '50-54',
+    8: '55-59',
+    9: '60-64',
+    10: '65-69',
+    11: '70-74',
+    12: '75-79',
+    13: '80+'
+  };
+
+/**
+ * Load and cache the CSV data
+ */
+export const loadData = async () => {
+  if (cachedData) return cachedData; // Return cached if already loaded
+  
+  const response = await fetch(csvPath);
+  if (!response.ok) {
+    throw new Error('Failed to load dataset.');
+  }
+  const csvText = await response.text();
+  
+  // Parse CSV
+  const results = Papa.parse(csvText, { 
+    header: true, 
+    dynamicTyping: true,
+    skipEmptyLines: true,
+    delimitersToGuess: [',', '\t', '|', ';'],
+    transformHeader: (header) => header.trim()
+  });
+
+  cachedData = results.data;
+
+  if (cachedData.length === 0) {
+    throw new Error('Dataset is empty after parsing');
+  }
+
+  // Extract columns and identify target variable
+  const allColumns = results.meta.fields || Object.keys(cachedData[0]);
+  
+  const featureNames = allColumns.filter(col => col !== targetVar);
+  const classDistribution = calculateClassDistribution();
+  const missingCount = countMissingValues(allColumns);
+
+  // Calculate basic metadata once
+  cachedMetadata = {
+    totalRecords: cachedData.length,
+    features: featureNames.length,
+    targetVariable: targetVar,  
+    classDistribution,
+    missingValues: missingCount,
+    featureTypes: { numeric: featureNames.length }
+  };
+  
+  return cachedData;
+};
+
+export const getData = () => cachedData;
+export const getMetadata = () => cachedMetadata;
 
 /**
  * Calculate Pearson correlation coefficient between two features
  */
-export const calculateCorrelation = (data, feature1, feature2) => {
-  const validData = data.filter(row => {
+export const calculateCorrelation = (feature1, feature2) => {
+  if (!cachedData) throw new Error('Data not loaded');
+
+  const validData = cachedData.filter(row => {
     const val1 = row[feature1];
     const val2 = row[feature2];
     return val1 !== null && val1 !== undefined && val1 !== '' &&
@@ -42,23 +115,8 @@ export const calculateCorrelation = (data, feature1, feature2) => {
 /**
  * Calculate age-binned diabetes risk across age categories
  */
-export const calculateAgeBinnedRisk = (data, targetVar) => {
-  // Age mapping (based on CDC BRFSS codebook)
-  const ageLabels = {
-    1: '18-24',
-    2: '25-29',
-    3: '30-34',
-    4: '35-39',
-    5: '40-44',
-    6: '45-49',
-    7: '50-54',
-    8: '55-59',
-    9: '60-64',
-    10: '65-69',
-    11: '70-74',
-    12: '75-79',
-    13: '80+'
-  };
+export const calculateAgeBinnedRisk = () => {
+  if (!cachedData) throw new Error('Data not loaded');
 
   const ageBins = {};
   
@@ -73,7 +131,7 @@ export const calculateAgeBinnedRisk = (data, targetVar) => {
   }
 
   // Count data points in each bin
-  data.forEach(row => {
+  cachedData.forEach(row => {
     const age = row.Age;
     const outcome = row[targetVar];
     
@@ -102,7 +160,9 @@ export const calculateAgeBinnedRisk = (data, targetVar) => {
  * Calculate physical activity impact on diabetes risk
  * PhysActivity: 0 = inactive, 1 = active
  */
-export const calculatePhysActivityImpact = (data, targetVar) => {
+export const calculatePhysActivityImpact = () => {
+  if (!cachedData) throw new Error('Data not loaded');
+
   const activeData = {
     total: 0,
     diabetic: 0,
@@ -115,7 +175,7 @@ export const calculatePhysActivityImpact = (data, targetVar) => {
     nonDiabetic: 0
   };
 
-  data.forEach(row => {
+  cachedData.forEach(row => {
     const physActivity = row.PhysActivity;
     const outcome = row[targetVar];
     
@@ -176,19 +236,23 @@ export const calculatePhysActivityImpact = (data, targetVar) => {
 /**
  * Calculate class distribution for target variable
  */
-export const calculateClassDistribution = (data, targetVar) => {
+export const calculateClassDistribution = () => {
+  if (!cachedData) throw new Error('Data not loaded');
+
   return {
-    negative: data.filter(row => row[targetVar] === 0 || row[targetVar] === '0').length,
-    positive: data.filter(row => row[targetVar] === 1 || row[targetVar] === '1' || row[targetVar] === 2 || row[targetVar] === '2').length
+    negative: cachedData.filter(row => row[targetVar] === 0 || row[targetVar] === '0').length,
+    positive: cachedData.filter(row => row[targetVar] === 1 || row[targetVar] === '1' || row[targetVar] === 2 || row[targetVar] === '2').length
   };
 };
 
 /**
  * Count missing values in dataset
  */
-export const countMissingValues = (data, columns) => {
+export const countMissingValues = (columns) => {
+  if (!cachedData) throw new Error('Data not loaded');
+
   let missingCount = 0;
-  data.forEach(row => {
+  cachedData.forEach(row => {
     columns.forEach(col => {
       const val = row[col];
       if (val === null || val === undefined || val === '' || (typeof val === 'number' && isNaN(val))) {
@@ -202,13 +266,13 @@ export const countMissingValues = (data, columns) => {
 /**
  * Calculate correlations for key features with target variable
  */
-export const calculateKeyCorrelations = (data, featureNames, targetVar) => {
+export const calculateKeyCorrelations = (featureNames) => {
   const keyFeatures = ['HighBP', 'HighChol', 'BMI', 'Age', 'GenHlth'].filter(f => 
     featureNames.includes(f)
   );
   
   const correlations = keyFeatures.map(feature => {
-    const corr = calculateCorrelation(data, feature, targetVar);
+    const corr = calculateCorrelation(feature, targetVar);
     return {
       feature: `${feature} → ${targetVar}`,
       value: corr.toFixed(3)
@@ -221,23 +285,8 @@ export const calculateKeyCorrelations = (data, featureNames, targetVar) => {
 /**
  * Calculate mosaic plot data for age groups and smoking status with diabetes outcomes
  */
-export const calculateMosaicData = (data, targetVar) => {
-  // Age group mapping (detailed 13 bins)
-  const ageLabels = {
-    1: '18-24',
-    2: '25-29',
-    3: '30-34',
-    4: '35-39',
-    5: '40-44',
-    6: '45-49',
-    7: '50-54',
-    8: '55-59',
-    9: '60-64',
-    10: '65-69',
-    11: '70-74',
-    12: '75-79',
-    13: '80+'
-  };
+export const calculateAgeSmokingData = () => {
+  if (!cachedData) throw new Error('Data not loaded');
 
   const smokingCategories = ['Non-Smoker', 'Smoker'];
 
@@ -264,7 +313,7 @@ export const calculateMosaicData = (data, targetVar) => {
   let totalRecords = 0;
 
   // Populate data
-  data.forEach(row => {
+  cachedData.forEach(row => {
     const age = row.Age;
     const smoker = row.Smoker;
     const outcome = row[targetVar];
@@ -301,47 +350,16 @@ export const calculateMosaicData = (data, targetVar) => {
   };
 };
 
-/**
- * Main analysis orchestrator - runs all calculations
- */
-export const analyzeData = (data, allColumns, targetVar, featureNames) => {
-  const totalRecords = data.length;
-  const features = featureNames.length;
-  
-  // Calculate all metrics
-  const classDistribution = calculateClassDistribution(data, targetVar);
-  const missingCount = countMissingValues(data, allColumns);
-  const correlations = calculateKeyCorrelations(data, featureNames, targetVar);
-  const ageBinnedData = calculateAgeBinnedRisk(data, targetVar);
-  const physActivityData = calculatePhysActivityImpact(data, targetVar);
-  const mosaicData = calculateMosaicData(data, targetVar);
-  
-  // Calculate imbalance metrics
+export const calculateClassImbalanceData = () => {
+  if (!cachedData) throw new Error('Data not loaded');
+
+  const classDistribution = calculateClassDistribution(targetVar);
   const imbalanceRatio = classDistribution.positive > 0 
     ? (classDistribution.negative / classDistribution.positive).toFixed(2)
     : '0';
-
-  // Return metadata and analytics
   return {
-    metadata: {
-      totalRecords,
-      features,
-      targetVariable: targetVar,
-      classDistribution,
-      missingValues: missingCount,
-      featureTypes: { numeric: features }
-    },
-    analytics: {
-      featureNames,
-      correlations: correlations.slice(0, 5),
-      imbalance: {
-        ratio: imbalanceRatio,
-        negativeCount: classDistribution.negative,
-        positiveCount: classDistribution.positive
-      },
-      ageBinnedData,
-      physActivityData,
-      mosaicData
-    }
+    ratio: imbalanceRatio,
+    negativeCount: classDistribution.negative,
+    positiveCount: classDistribution.positive
   };
-};
+}

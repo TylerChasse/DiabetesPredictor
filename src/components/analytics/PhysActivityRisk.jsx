@@ -1,9 +1,10 @@
-import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../../styles/AnalyticsSection.module.css';
+import { calculatePhysActivityImpact } from '../../utils/DataAnalysis';
 
 
-const PhysActivityImpact = ({ analytics }) => {
-  const { physActivityData } = analytics;
+const PhysActivityImpact = () => {
+  const physActivityData = useMemo(() => calculatePhysActivityImpact(), []);
 
   if (!physActivityData) {
     return (

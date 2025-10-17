@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, Cell } from 'recharts';
-import styles from '../../styles/Dashboard.module.css';
+import styles from '../../styles/VisualizationsSection.module.css';
+import { calculateAgeBinnedRisk } from '../../utils/DataAnalysis';
 
-const AgeBinnedChart = ({ analytics }) => {
-  const { ageBinnedData } = analytics;
+const AgeBinnedChart = () => {
+  const ageBinnedData = useMemo(() => calculateAgeBinnedRisk(), []);
 
   if (!ageBinnedData || ageBinnedData.length === 0) {
     return (

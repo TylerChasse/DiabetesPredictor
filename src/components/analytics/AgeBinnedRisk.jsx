@@ -1,8 +1,9 @@
-import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../../styles/AnalyticsSection.module.css';
+import { calculateAgeBinnedRisk } from '../../utils/DataAnalysis';
 
-const AgeBinnedRisk = ({ analytics }) => {
-  const { ageBinnedData } = analytics;
+const AgeBinnedRisk = () => {
+  const ageBinnedData = useMemo(() => calculateAgeBinnedRisk(), []);
 
   if (!ageBinnedData || ageBinnedData.length === 0) {
     return (

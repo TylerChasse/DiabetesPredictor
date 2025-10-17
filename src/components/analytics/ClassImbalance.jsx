@@ -1,22 +1,20 @@
-import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../../styles/AnalyticsSection.module.css';
+import { calculateClassImbalanceData } from '../../utils/DataAnalysis';
 
-const ClassImbalance = ({ metadata, analytics }) => {
-  const { totalRecords, classDistribution } = metadata;
-  const { imbalance } = analytics;
+const ClassImbalance = () => {
+  const imbalanceData = useMemo(() => calculateClassImbalanceData(), []);
+  const totalRecords = imbalanceData.negativeCount + imbalanceData.positiveCount;
 
   // Calculate ratio if not provided
-  const ratio = imbalance?.ratio || 
-    (classDistribution.positive > 0 
-      ? (classDistribution.negative / classDistribution.positive).toFixed(2)
-      : '0');
+  const ratio = imbalanceData.ratio
 
   const negativePercent = totalRecords > 0
-    ? ((classDistribution.negative / totalRecords) * 100).toFixed(2)
+    ? ((imbalanceData.negativeCount / totalRecords) * 100).toFixed(2)
     : '0';
 
   const positivePercent = totalRecords > 0
-    ? ((classDistribution.positive / totalRecords) * 100).toFixed(2)
+    ? ((imbalanceData.positiveCount / totalRecords) * 100).toFixed(2)
     : '0';
 
   return (
@@ -33,7 +31,7 @@ const ClassImbalance = ({ metadata, analytics }) => {
         <div className={styles.metricRow}>
           <span className={styles.metricLabel}>Non-Diabetic:</span>
           <span className={styles.metricValue}>
-            {classDistribution.negative.toLocaleString()}
+            {imbalanceData.negativeCount.toLocaleString()}
             <span className={styles.metricPercent}> ({negativePercent}%)</span>
           </span>
         </div>
@@ -41,7 +39,7 @@ const ClassImbalance = ({ metadata, analytics }) => {
         <div className={styles.metricRow}>
           <span className={styles.metricLabel}>Diabetic or Prediabetic:</span>
           <span className={styles.metricValue}>
-            {classDistribution.positive.toLocaleString()}
+            {imbalanceData.positiveCount.toLocaleString()}
             <span className={styles.metricPercent}> ({positivePercent}%)</span>
           </span>
         </div>

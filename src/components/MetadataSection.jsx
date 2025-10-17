@@ -1,7 +1,10 @@
-import React from 'react';
-import styles from '../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../styles/MetadataSection.module.css';
+import { getMetadata } from '../utils/DataAnalysis';
 
-const MetadataSection = ({ metadata }) => {
+const MetadataSection = () => {
+  const metadata = useMemo(() => getMetadata(), []);
+
   const negativePercent = metadata.totalRecords > 0 
     ? ((metadata.classDistribution.negative / metadata.totalRecords) * 100).toFixed(2)
     : '0';

@@ -1,10 +1,12 @@
-import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../../styles/VisualizationsSection.module.css';
+import { calculateAgeSmokingData } from '../../utils/DataAnalysis';
 
-const AgeSmokingMosaic = ({ analytics }) => {
-  const { mosaicData } = analytics;
 
-  if (!mosaicData || !mosaicData.ageGroups || mosaicData.ageGroups.length === 0) {
+const AgeSmokingMosaic = () => {
+  const ageSmokingData = useMemo(() => calculateAgeSmokingData(), []);
+
+  if (!ageSmokingData || !ageSmokingData.ageGroups || ageSmokingData.ageGroups.length === 0) {
     return (
       <div className={styles.visualizationCardWide}>
         <h3 className={styles.visualizationTitle}>Age & Smoking Status Distribution</h3>
@@ -17,7 +19,7 @@ const AgeSmokingMosaic = ({ analytics }) => {
     );
   }
 
-  const { ageGroups, smokingCategories, totalRecords } = mosaicData;
+  const { ageGroups, smokingCategories, totalRecords } = ageSmokingData;
 
   // Calculate proportions for mosaic layout
   const width = 1300;

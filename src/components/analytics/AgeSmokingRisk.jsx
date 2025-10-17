@@ -1,10 +1,11 @@
-import React from 'react';
-import styles from '../../styles/Dashboard.module.css';
+import React, { useMemo } from 'react';
+import styles from '../../styles/AnalyticsSection.module.css';
+import { calculateAgeSmokingData } from '../../utils/DataAnalysis';
 
-const AgeSmokingRisk = ({ analytics }) => {
-  const { mosaicData } = analytics;
+const AgeSmokingRisk = () => {
+  const ageSmokingData = useMemo(() => calculateAgeSmokingData(), []);
 
-  if (!mosaicData || !mosaicData.ageGroups) {
+  if (!ageSmokingData || !ageSmokingData.ageGroups) {
     return (
       <div className={styles.analysisCard}>
         <h3 className={styles.analysisTitle}>Smoking Risk Analysis</h3>
@@ -14,7 +15,7 @@ const AgeSmokingRisk = ({ analytics }) => {
     );
   }
 
-  const { ageGroups } = mosaicData;
+  const ageGroups = ageSmokingData.ageGroups;
 
   // Calculate overall smoking vs non-smoking diabetes rates
   let smokerTotal = 0, smokerDiabetic = 0;
