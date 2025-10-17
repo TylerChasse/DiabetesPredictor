@@ -13,15 +13,21 @@ Need the following installed:
 - Run 'npm run dev' to run site locally.
 - Navigate to link provided in a browser. For example "http://localhost:5173".
 
+### Data Flow
+- Dashboard.jsx calls loadData() which lives in utils/DataAnalysis.js
+- loadData() fetches and parses the dataset csv file and caches it along with the gathered metadata
+- Calculation functions within DataAnalysis.js can used cachedData when making calculations
+- Individual analytics/visualizations can import corresponding calculation functions from DataAnalysis.js
+- Use UseMemo() when calling these functions ( for example: const ageBinnedData = useMemo(() => calculateAgeBinnedRisk(), []); )
+- The data returned from these calculation functions can then be used for the analytics/visualizations as needed
+
 ### Updating Analytics/Visualizations
 
-- Calculation functions that handle the data directly can be added to utils/DataAnalysis.js
-- Call these functions in the anaylzeData() function within DataAnalysis.js
-  and return the results in the analytics object so that they can be used in Dashboard.jsx
-- The results (metadata and analytics) get passed from Dashboard.jsx to AnalyticsSecton.jsx
-  and VisualizationsSection.jsx
-- AnalyticsSection and VisualizationsSection then pass this data to the individual analytics
-  and visualizations for use
+- Calculation functions that handle the data directly can be added to utils/DataAnalysis.js (for example, calculateAgeBinnedRisk())
+- In your analytic/visualization file import this function and call it using UseMemo (see above)
+- Use the returned data within your analytic/visualization
+- Add you analytic/visualization into its respective AnalyticsSection/VisualizationsSection
+- Any new css that's needed can be added to the respective AnalyticsSection/VisualizationsSection module.css file in the styles folder 
 
 ### Database Column Explanations
 
