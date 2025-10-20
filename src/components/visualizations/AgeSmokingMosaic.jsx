@@ -8,7 +8,7 @@ const AgeSmokingMosaic = () => {
 
   if (!ageSmokingData || !ageSmokingData.ageGroups || ageSmokingData.ageGroups.length === 0) {
     return (
-      <div className={styles.visualizationCardWide}>
+      <div className={styles.visualizationCardWider}>
         <h3 className={styles.visualizationTitle}>Age & Smoking Status Distribution</h3>
         <div className={styles.chartPlaceholder}>
           <div className={styles.chartIcon}>📊</div>
@@ -100,7 +100,7 @@ const AgeSmokingMosaic = () => {
   };
 
   return (
-    <div className={styles.visualizationCardWide}>
+    <div className={styles.visualizationCardWider}>
       <h3 className={styles.visualizationTitle} style={{ textAlign: 'center' }}>
         Age & Smoking Status Distribution
       </h3>

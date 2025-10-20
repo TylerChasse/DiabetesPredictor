@@ -23,6 +23,16 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
+.visualizationCardWider {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 24px;
+  grid-column: span 3;
+  max-width: 100%;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
 .visualizationTitle {
   font-size: 15px;
   font-weight: 600;

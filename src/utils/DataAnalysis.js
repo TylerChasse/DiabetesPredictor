@@ -363,3 +363,65 @@ export const calculateClassImbalanceData = () => {
     positiveCount: classDistribution.positive
   };
 }
+
+/**
+ * Calculate risk factor prevalence among diabetic vs non-diabetic populations
+ */
+export const calculateDiabeticRiskProfile = () => {
+  const data = getData();
+  const targetVar = 'Diabetes';
+  
+  const factors = {
+    'High BP': 'HighBP',
+    'High Chol': 'HighChol',
+    'Smoker': 'Smoker',
+    'Obese': 'BMI',
+    'Inactive': 'PhysActivity',
+    'Heavy Drinker': 'HvyAlcoholConsump',
+    'Poor Health': 'GenHlth',
+    'Heart Disease': 'HeartDiseaseorAttack',
+    'Stroke': 'Stroke',
+    'Difficulty Walking': 'DiffWalk'
+  };
+  
+  const diabeticData = data.filter(row => row[targetVar] === 1 || row[targetVar] === 2);
+  const nonDiabeticData = data.filter(row => row[targetVar] === 0);
+  
+  const profile = [];
+  
+  Object.entries(factors).forEach(([label, field]) => {
+    let diabeticCount, nonDiabeticCount;
+    
+    if (field === 'BMI') {
+      // Count people with BMI > 30 (obese)
+      diabeticCount = diabeticData.filter(row => row.BMI > 30).length;
+      nonDiabeticCount = nonDiabeticData.filter(row => row.BMI > 30).length;
+    } else if (field === 'PhysActivity') {
+      // Count inactive people (0 = inactive)
+      diabeticCount = diabeticData.filter(row => row[field] === 0).length;
+      nonDiabeticCount = nonDiabeticData.filter(row => row[field] === 0).length;
+    } else if (field === 'GenHlth') {
+      // Count people with poor/fair health (4 or 5)
+      diabeticCount = diabeticData.filter(row => row[field] >= 4).length;
+      nonDiabeticCount = nonDiabeticData.filter(row => row[field] >= 4).length;
+    } else {
+      // Count people with the risk factor (1 = yes)
+      diabeticCount = diabeticData.filter(row => row[field] === 1).length;
+      nonDiabeticCount = nonDiabeticData.filter(row => row[field] === 1).length;
+    }
+    
+    const diabeticPercent = parseFloat(((diabeticCount / diabeticData.length) * 100).toFixed(1));
+    const nonDiabeticPercent = parseFloat(((nonDiabeticCount / nonDiabeticData.length) * 100).toFixed(1));
+    
+    profile.push({
+      factor: label,
+      Diabetic: diabeticPercent,
+      NonDiabetic: nonDiabeticPercent,
+      difference: (diabeticPercent - nonDiabeticPercent).toFixed(1),
+      relativeRisk: (diabeticPercent / nonDiabeticPercent).toFixed(2)
+    });
+  });
+  
+  // Sort by difference (most influential first)
+  return profile.sort((a, b) => Math.abs(parseFloat(b.difference)) - Math.abs(parseFloat(a.difference)));
+};

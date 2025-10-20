@@ -8,7 +8,7 @@ const AgeBinnedChart = () => {
 
   if (!ageBinnedData || ageBinnedData.length === 0) {
     return (
-      <div className={styles.visualizationCard}>
+      <div className={styles.visualizationCardWide}>
         <h3 className={styles.visualizationTitle}>Diabetes Risk by Age Group</h3>
         <div className={styles.chartPlaceholder}>
           <div className={styles.chartIcon}>📊</div>
@@ -57,7 +57,7 @@ const AgeBinnedChart = () => {
   };
 
   return (
-    <div className={styles.visualizationCard}>
+    <div className={styles.visualizationCardWide}>
       <h3 className={styles.visualizationTitle}>Diabetes Risk by Age Group</h3>
       <p className={styles.chartSubtitle}>Stacked bar chart showing diabetes prevalence across age categories</p>
       

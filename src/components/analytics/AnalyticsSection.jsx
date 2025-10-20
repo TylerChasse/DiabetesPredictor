@@ -4,14 +4,15 @@ import ClassImbalance from './ClassImbalance';
 import AgeBinnedRisk from './AgeBinnedRisk';
 import PhysActivityImpact from './PhysActivityRisk';
 import AgeSmokingRisk from './AgeSmokingRisk';
+import RiskFactors from './RiskFactors';
 
 const AnalyticsSection = () => {
   return (
     <section>
       <h2 className={styles.sectionTitle}>STATISTICAL ANALYSIS</h2>
       <div className={styles.analysisGrid}>
-        <ClassImbalance />
         <AgeBinnedRisk />
+        <RiskFactors />
         <PhysActivityImpact />
         <AgeSmokingRisk />
         {/* Add more analytics here */}
