@@ -1,26 +1,29 @@
-# Heart Disease Decision Tree Model Card
+# Diabetes Decision Tree Model (Recall-Prioritized)
 
-**Model version:** v1  
-**Training date:** 2025-10-12  
+**Model version:** v1_recall  
+**Training date:** 2025-10-20  
 
 ### Best Params
-{'dt__max_depth': None, 'dt__min_samples_leaf': 1}
+{'dt__max_depth': 5, 'dt__min_samples_leaf': 1}
 
 ### Metrics (Test Set)
 {
-  "roc_auc": 0.6071263620991985,
-  "pr_auc": 0.21738925673869913,
-  "precision": 0.3148796498905908,
-  "recall": 0.36047094188376755,
-  "f1": 0.3361364167250642,
-  "specificity": 0.8535273203592815,
+  "roc_auc": 0.7931898368218473,
+  "pr_auc": 0.391036285507704,
+  "precision": 0.3092534914096252,
+  "recall": 0.7710420841683366,
+  "f1": 0.44144854786661886,
+  "specificity": 0.6783776197604791,
   "confusion_matrix": {
-    "tn": 18245,
-    "fp": 3131,
-    "fn": 2553,
-    "tp": 1439
+    "tn": 14501,
+    "fp": 6875,
+    "fn": 914,
+    "tp": 3078
   }
 }
+
+### Objective
+Optimized for *recall*, minimizing false negatives (e.g., catching as many positive cases as possible).
 
 ### Notes
 Educational demo only — not medical advice.

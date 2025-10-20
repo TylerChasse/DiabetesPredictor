@@ -384,6 +384,6 @@
       "category": 8
     }
   ],
-  "preproc_version": "v1",
-  "trained_on": "2025-10-12"
+  "preproc_version": "v1_recall",
+  "trained_on": "2025-10-20"
 }

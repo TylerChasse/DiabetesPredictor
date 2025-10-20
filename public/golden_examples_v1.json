@@ -23,7 +23,7 @@
       "Education": 6,
       "Income": 8
     },
-    "pred_proba_high": 0.0,
+    "pred_proba_high": 0.38788430333277873,
     "label": 0,
     "true": 0
   },
@@ -51,7 +51,7 @@
       "Education": 6,
       "Income": 4
     },
-    "pred_proba_high": 0.0,
+    "pred_proba_high": 0.10071542461399391,
     "label": 0,
     "true": 0
   },
@@ -79,8 +79,8 @@
       "Education": 4,
       "Income": 7
     },
-    "pred_proba_high": 0.0,
-    "label": 0,
+    "pred_proba_high": 0.5285322162109103,
+    "label": 1,
     "true": 0
   },
   {
@@ -107,7 +107,7 @@
       "Education": 4,
       "Income": 8
     },
-    "pred_proba_high": 0.0,
+    "pred_proba_high": 0.42065667467100054,
     "label": 0,
     "true": 0
   },
@@ -135,7 +135,7 @@
       "Education": 5,
       "Income": 4
     },
-    "pred_proba_high": 0.0,
+    "pred_proba_high": 0.47640420401775174,
     "label": 0,
     "true": 1
   },
@@ -163,8 +163,8 @@
       "Education": 4,
       "Income": 3
     },
-    "pred_proba_high": 1.0,
-    "label": 1,
+    "pred_proba_high": 0.19203788019184193,
+    "label": 0,
     "true": 0
   },
   {
@@ -191,8 +191,8 @@
       "Education": 6,
       "Income": 8
     },
-    "pred_proba_high": 1.0,
-    "label": 1,
+    "pred_proba_high": 0.26250513167763245,
+    "label": 0,
     "true": 0
   },
   {
@@ -219,8 +219,8 @@
       "Education": 5,
       "Income": 8
     },
-    "pred_proba_high": 0.0,
-    "label": 0,
+    "pred_proba_high": 0.7449591849282292,
+    "label": 1,
     "true": 0
   },
   {
@@ -247,8 +247,8 @@
       "Education": 4,
       "Income": 7
     },
-    "pred_proba_high": 1.0,
-    "label": 1,
+    "pred_proba_high": 0.47640420401775174,
+    "label": 0,
     "true": 0
   },
   {
@@ -275,7 +275,7 @@
       "Education": 4,
       "Income": 8
     },
-    "pred_proba_high": 0.0,
+    "pred_proba_high": 0.3778667534322733,
     "label": 0,
     "true": 0
   }
