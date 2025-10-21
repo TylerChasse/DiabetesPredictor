@@ -132,3 +132,24 @@
 .buttonSubmit:active {
   transform: translateY(1px);
 }
+
+.helpText {
+  display: block;
+  font-size: 12px;
+  color: #718096;
+  margin-top: 4px;
+  font-style: italic;
+}
+
+.section {
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e2e8f0;
+}

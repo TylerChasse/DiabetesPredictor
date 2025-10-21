@@ -201,3 +201,53 @@
 .button:active {
   transform: translateY(1px);
 }
+
+.riskLevelSection {
+  margin: 24px 0;
+}
+
+.riskBadgeMinimal {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background: white;
+  border: 2px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.riskIconCircle {
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.riskPercentage {
+  color: white;
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.riskTextBlock {
+  flex: 1;
+}
+
+.riskLevelTitle {
+  font-size: 26px;
+  font-weight: 800;
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+}
+
+.riskLevelSubtext {
+  font-size: 14px;
+  color: #718096;
+  font-weight: 500;
+}
