@@ -373,12 +373,12 @@ export const calculateDiabeticRiskProfile = () => {
   
   const factors = {
     'High BP': 'HighBP',
+    'Gen Health': 'GenHlth',
     'High Chol': 'HighChol',
     'Smoker': 'Smoker',
-    'Obese': 'BMI',
-    'Inactive': 'PhysActivity',
-    'Heavy Drinker': 'HvyAlcoholConsump',
-    'Poor Health': 'GenHlth',
+    'BMI': 'BMI',
+    'Physical Activity': 'PhysActivity',
+    'Alcohol Consumption': 'HvyAlcoholConsump',
     'Heart Disease': 'HeartDiseaseorAttack',
     'Stroke': 'Stroke',
     'Difficulty Walking': 'DiffWalk'

@@ -11,8 +11,8 @@ const DiabeticRiskProfileRadar = () => {
       <h3 className={styles.visualizationTitle}>Diabetes Risk Factor Profile</h3>
       <p className={styles.chartSubtitle}>Prevalence comparison: Diabetic vs Non-Diabetic</p>
       
-      <ResponsiveContainer width="100%" height={450}>
-        <RadarChart data={profileData}>
+      <ResponsiveContainer width="100%" height={400}>
+        <RadarChart data={profileData} >
           <PolarGrid stroke="#cbd5e0" />
           <PolarAngleAxis 
             dataKey="factor" 
@@ -41,7 +41,7 @@ const DiabeticRiskProfileRadar = () => {
             strokeWidth={2}
           />
           <Legend 
-            wrapperStyle={{ paddingTop: '25px' }}
+            wrapperStyle={{ paddingTop: '10px' }}
             iconType="circle"
           />
           <Tooltip 
