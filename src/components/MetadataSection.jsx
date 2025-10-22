@@ -1,22 +1,25 @@
 import React, { useMemo } from 'react';
+import { 
+  getMetadata, 
+  getAverageAge,
+  getAverageBMI 
+} from '../utils/DataAnalysis';
 import styles from '../styles/MetadataSection.module.css';
-import { getMetadata } from '../utils/DataAnalysis';
 
 const MetadataSection = () => {
   const metadata = useMemo(() => getMetadata(), []);
+  const averageAge = useMemo(() => getAverageAge(), []);
+  const averageBMI = useMemo(() => getAverageBMI(), []);
 
-  const negativePercent = metadata.totalRecords > 0 
-    ? ((metadata.classDistribution.negative / metadata.totalRecords) * 100).toFixed(2)
-    : '0';
-  
-  const positivePercent = metadata.totalRecords > 0 
-    ? ((metadata.classDistribution.positive / metadata.totalRecords) * 100).toFixed(2)
-    : '0';
+  const negativePercent = ((metadata.classDistribution.negative / metadata.totalRecords) * 100).toFixed(2);
+  const positivePercent = ((metadata.classDistribution.positive / metadata.totalRecords) * 100).toFixed(2);
 
   const metadataItems = [
     { label: 'Total Records', value: metadata.totalRecords.toLocaleString() },
     { label: 'Features', value: metadata.features },
     { label: 'Target Variable', value: metadata.targetVariable },
+    { label: 'Average Age', value: averageAge.ageRange },
+    { label: 'Average BMI', value: averageBMI, subValue: 'kg/m²' },
     { 
       label: 'Negative Cases', 
       value: metadata.classDistribution.negative.toLocaleString(),
@@ -44,7 +47,7 @@ const MetadataSection = () => {
               {item.value}
               {item.subValue && (
                 <span style={{ 
-                  fontSize: '22px', 
+                  fontSize: '16px', 
                   fontWeight: '400', 
                   marginLeft: '8px',
                   color: '#718096'
