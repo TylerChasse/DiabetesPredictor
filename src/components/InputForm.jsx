@@ -77,7 +77,7 @@ const InputForm = ({ onPredict }) => {
     if (validationRules[name]?.type === 'number') {
       processedValue = value.replace(/[^\d.-]/g, '');
     } else if (validationRules[name]?.type === 'select') {
-      processedValue = parseInt(value);
+      processedValue = value === '' ? '' : parseInt(value);
     }
     
     setFormData(prev => ({ ...prev, [name]: processedValue }));
