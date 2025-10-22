@@ -145,7 +145,7 @@ const InputForm = ({ onPredict }) => {
     <div key={field.name} className={styles.formField}>
       <label className={styles.label}>
         {field.label} 
-        {field.unit && <span className={styles.labelUnit}>({field.unit})</span>}
+        {field.unit && <span className={styles.labelUnit}> ({field.unit})</span>}
         <span className={styles.required}>*</span>
       </label>
       <input
@@ -241,8 +241,8 @@ const InputForm = ({ onPredict }) => {
   // HEALTH & MEDICAL INFORMATION SECTION
   const healthNumericFields = [
     { name: 'BMI', label: 'BMI', unit: 'kg/m²', placeholder: 'e.g., 27.5', help: 'Body Mass Index (Range: 12-95)' },
-    { name: 'MentHlth', label: 'Mental Health Days', unit: 'days', placeholder: 'e.g., 5', help: 'Poor mental health days in past 30 days (0-30)' },
-    { name: 'PhysHlth', label: 'Physical Health Days', unit: 'days', placeholder: 'e.g., 3', help: 'Poor physical health days in past 30 days (0-30)' }
+    { name: 'MentHlth', label: 'Poor Mental Health Days', unit: 'days', placeholder: 'e.g., 5', help: 'Poor mental health days in past 30 days (0-30)' },
+    { name: 'PhysHlth', label: 'Poor Physical Health Days', unit: 'days', placeholder: 'e.g., 3', help: 'Poor physical health days in past 30 days (0-30)' }
   ];
 
   const healthSelectFields = [
@@ -257,19 +257,19 @@ const InputForm = ({ onPredict }) => {
         { value: 5, label: 'Poor' }
       ]
     },
-    { name: 'HighBP', label: 'High Blood Pressure', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
-    { name: 'HighChol', label: 'High Cholesterol', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+    { name: 'HighBP', label: 'High Blood Pressure', help: '*Diagnosed by a health professional', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+    { name: 'HighChol', label: 'High Cholesterol', help: '*Diagnosed by a health professional', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'CholCheck', label: 'Cholesterol Check (Past 5 Years)', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'Stroke', label: 'History of Stroke', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'HeartDiseaseorAttack', label: 'Heart Disease/Attack', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'DiffWalk', label: 'Difficulty Walking/Climbing Stairs', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
-    { name: 'Smoker', label: 'Smoker (100+ Cigarettes)', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
-    { name: 'PhysActivity', label: 'Physical Activity (Past 30 Days)', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+    { name: 'Smoker', label: 'Smoker (100+ Cigarettes in Lifetime)', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+    { name: 'PhysActivity', label: 'Daily Physical Activity', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'Fruits', label: 'Consume Fruits Daily', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'Veggies', label: 'Consume Vegetables Daily', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
-    { name: 'HvyAlcoholConsump', label: 'Heavy Alcohol Consumption', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
+    { name: 'HvyAlcoholConsump', label: 'Heavy Alcohol Consumption', help: 'More than 14 drinks per week', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
     { name: 'AnyHealthcare', label: 'Have Healthcare Coverage', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] },
-    { name: 'NoDocbcCost', label: 'Could Not See Doctor Due to Cost', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] }
+    { name: 'NoDocbcCost', label: 'Could Not See Doctor Due to Cost', help: 'In past year', options: [{ value: 1, label: 'Yes' }, { value: 0, label: 'No' }] }
 ];
 
   return (
