@@ -425,3 +425,36 @@ export const calculateDiabeticRiskProfile = () => {
   // Sort by difference (most influential first)
   return profile.sort((a, b) => Math.abs(parseFloat(b.difference)) - Math.abs(parseFloat(a.difference)));
 };
+
+/**
+ * Calculate average age category
+ */
+export const getAverageAge = () => {
+  const data = getData();
+  
+  const ageLabels = {
+    1: '18-24', 2: '25-29', 3: '30-34', 4: '35-39',
+    5: '40-44', 6: '45-49', 7: '50-54', 8: '55-59',
+    9: '60-64', 10: '65-69', 11: '70-74', 12: '75-79', 13: '80+'
+  };
+  
+  const totalAge = data.reduce((sum, row) => sum + (row.Age || 0), 0);
+  const avgAgeBin = Math.round(totalAge / data.length);
+  
+  return {
+    avgBin: avgAgeBin,
+    ageRange: ageLabels[avgAgeBin] || 'Unknown'
+  };
+};
+
+/**
+ * Calculate average BMI
+ */
+export const getAverageBMI = () => {
+  const data = getData();
+  
+  const totalBMI = data.reduce((sum, row) => sum + (row.BMI || 0), 0);
+  const avgBMI = (totalBMI / data.length).toFixed(1);
+  
+  return parseFloat(avgBMI);
+};
