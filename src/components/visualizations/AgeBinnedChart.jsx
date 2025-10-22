@@ -71,8 +71,14 @@ const AgeBinnedChart = () => {
             dataKey="ageGroup" 
             angle={-45}
             textAnchor="end"
-            height={80}
+            height={60}
             tick={{ fontSize: 12 }}
+            label={{ 
+              value: 'Age Group', 
+              position: 'insideBottom', 
+              offset: -5,
+              style: { fontSize: 14, fontWeight: 600, fill: '#4a5568' }
+            }}
           />
           <YAxis 
             label={{ value: 'Number of People', angle: -90, position: 'insideLeft' }}
