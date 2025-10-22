@@ -458,3 +458,29 @@ export const getAverageBMI = () => {
   
   return parseFloat(avgBMI);
 };
+
+/**
+ * Calculate average income category
+ */
+export const getAverageIncome = () => {
+  const data = getData();
+  
+  const incomeLabels = {
+    1: '<$10k',
+    2: '$10k-$15k',
+    3: '$15k-$20k',
+    4: '$20k-$25k',
+    5: '$25k-$35k',
+    6: '$35k-$50k',
+    7: '$50k-$75k',
+    8: '>$75k'
+  };
+  
+  const totalIncome = data.reduce((sum, row) => sum + (row.Income || 0), 0);
+  const avgIncomeBin = Math.round(totalIncome / data.length);
+  
+  return {
+    avgBin: avgIncomeBin,
+    incomeRange: incomeLabels[avgIncomeBin] || 'Unknown'
+  };
+};

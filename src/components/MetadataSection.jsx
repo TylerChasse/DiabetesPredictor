@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { 
   getMetadata, 
   getAverageAge,
-  getAverageBMI 
+  getAverageBMI,
+  getAverageIncome 
 } from '../utils/DataAnalysis';
 import styles from '../styles/MetadataSection.module.css';
 
@@ -10,27 +11,30 @@ const MetadataSection = () => {
   const metadata = useMemo(() => getMetadata(), []);
   const averageAge = useMemo(() => getAverageAge(), []);
   const averageBMI = useMemo(() => getAverageBMI(), []);
+  const averageIncome = useMemo(() => getAverageIncome(), []);
 
   const negativePercent = ((metadata.classDistribution.negative / metadata.totalRecords) * 100).toFixed(2);
   const positivePercent = ((metadata.classDistribution.positive / metadata.totalRecords) * 100).toFixed(2);
 
   const metadataItems = [
     { label: 'Total Records', value: metadata.totalRecords.toLocaleString() },
+    { label: 'Collection Year', value: '2015'},
     { label: 'Features', value: metadata.features },
     { label: 'Target Variable', value: metadata.targetVariable },
-    { label: 'Average Age', value: averageAge.ageRange },
-    { label: 'Average BMI', value: averageBMI, subValue: 'kg/m²' },
-    { 
-      label: 'Negative Cases', 
-      value: metadata.classDistribution.negative.toLocaleString(),
-      subValue: `(${negativePercent}%)`
-    },
+    { label: 'Missing Values', value: metadata.missingValues.toLocaleString() },
     { 
       label: 'Positive Cases', 
       value: metadata.classDistribution.positive.toLocaleString(),
       subValue: `(${positivePercent}%)`
     },
-    { label: 'Missing Values', value: metadata.missingValues.toLocaleString() },
+    { 
+      label: 'Negative Cases', 
+      value: metadata.classDistribution.negative.toLocaleString(),
+      subValue: `(${negativePercent}%)`
+    },
+    { label: 'Average Age', value: averageAge.ageRange },
+    { label: 'Average BMI', value: averageBMI, subValue: 'kg/m²' },
+    { label: 'Average Household Income', value: averageIncome.incomeRange }
   ];
 
   return (
