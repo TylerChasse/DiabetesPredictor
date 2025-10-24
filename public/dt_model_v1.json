@@ -19,7 +19,7 @@
     }
   },
   "model_version": "v1_recall",
-  "trained_on": "2025-10-20",
+  "trained_on": "2025-10-23",
   "tree": {
     "nodes": [
       {
