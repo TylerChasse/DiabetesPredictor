@@ -30,6 +30,18 @@
     "PhysHlth": 0.0,
     "Age": 8.0
   },
+  "numeric_scaling_mean": {
+    "BMI": 28.316681613465917,
+    "MentHlth": 3.1908032836968196,
+    "PhysHlth": 4.2518453548304445,
+    "Age": 8.013915305850933
+  },
+  "numeric_scaling_std": {
+    "BMI": 6.169690446090335,
+    "MentHlth": 7.457547301449161,
+    "PhysHlth": 8.738419518274407,
+    "Age": 3.060596551326877
+  },
   "numeric_ranges_train": {
     "BMI": {
       "min": 12.0,
@@ -384,6 +396,6 @@
       "category": 8
     }
   ],
-  "preproc_version": "v1_recall",
+  "preproc_version": "v2_knn_recall",
   "trained_on": "2025-10-23"
 }

@@ -1,0 +1,29 @@
+{
+  "params": {
+    "knn__algorithm": "auto",
+    "knn__metric": "euclidean",
+    "knn__n_neighbors": 3,
+    "knn__p": 1,
+    "knn__weights": "distance"
+  },
+  "threshold": 2.713966989349787e-08,
+  "metrics": {
+    "roc_auc": 0.6845051911457646,
+    "pr_auc": 0.2842695098840621,
+    "precision": 0.2902138540213854,
+    "recall": 0.625501002004008,
+    "f1": 0.3964750714512544,
+    "specificity": 0.7143057634730539,
+    "confusion_matrix": {
+      "tn": 15269,
+      "fp": 6107,
+      "fn": 1495,
+      "tp": 2497
+    }
+  },
+  "model_version": "v2_knn_recall",
+  "model_type": "KNeighborsClassifier",
+  "trained_on": "2025-10-23",
+  "cv_best_score": 0.26806963259682215,
+  "note": "KNN is instance-based and requires the full training set for predictions"
+}

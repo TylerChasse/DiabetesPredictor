@@ -1,7 +1,7 @@
 # Diabetes Decision Tree Model (Recall-Prioritized)
 
 **Model version:** v1_recall  
-**Training date:** 2025-10-20  
+**Training date:** 2025-10-23  
 
 ### Best Params
 {'dt__max_depth': 5, 'dt__min_samples_leaf': 1}
