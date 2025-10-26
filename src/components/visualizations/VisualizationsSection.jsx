@@ -4,6 +4,7 @@ import AgeBinnedChart from './AgeBinnedChart';
 import PhysActivityChart from './PhysActivityChart';
 import AgeSmokingMosaic from './AgeSmokingMosaic';
 import RiskProfileRadar from './RiskProfileRadar';
+import ModelComparison from './ModelComparison';
 
 const VisualizationsSection = () => {
   return (
@@ -14,6 +15,7 @@ const VisualizationsSection = () => {
         <RiskProfileRadar />
         <AgeSmokingMosaic />
         <PhysActivityChart />
+        <ModelComparison />
         {/* Add more visualizations here*/}
       </div>
     </section>

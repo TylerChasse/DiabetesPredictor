@@ -3,12 +3,14 @@
  * 
  * Contains all calculation functions for analyzing diabetes health indicators dataset
  */
-import Papa from 'papaparse';
+import { cache } from 'react';
+import { supabase } from './supabaseClient';
 
-let csvPath = 'diabetes_health.csv'
 let targetVar = 'Diabetes';
 let cachedData = null;
-let cachedMetadata = null;
+let isLoading = false;
+let loadPromise = null;
+
 let ageLabels = {
     1: '18-24',
     2: '25-29',
@@ -26,62 +28,134 @@ let ageLabels = {
   };
 
 /**
- * Load and cache the CSV data
+ * Load and cache data from Supabase
+ * This should be called once when the Dashboard mounts
  */
-export const loadData = async () => {
-  if (cachedData) return cachedData; // Return cached if already loaded
-  
-  const response = await fetch(csvPath);
-  if (!response.ok) {
-    throw new Error('Failed to load dataset.');
-  }
-  const csvText = await response.text();
-  
-  // Parse CSV
-  const results = Papa.parse(csvText, { 
-    header: true, 
-    dynamicTyping: true,
-    skipEmptyLines: true,
-    delimitersToGuess: [',', '\t', '|', ';'],
-    transformHeader: (header) => header.trim()
-  });
-
-  cachedData = results.data;
-
-  if (cachedData.length === 0) {
-    throw new Error('Dataset is empty after parsing');
+export const cacheData = async () => {
+  // If already loading, return the existing promise
+  if (isLoading && loadPromise) {
+    return loadPromise;
   }
 
-  // Extract columns and identify target variable
-  const allColumns = results.meta.fields || Object.keys(cachedData[0]);
-  
-  const featureNames = allColumns.filter(col => col !== targetVar);
-  const classDistribution = calculateClassDistribution();
-  const missingCount = countMissingValues(allColumns);
+  // If already cached, return immediately
+  if (cachedData) {
+    return cachedData;
+  }
 
-  // Calculate basic metadata once
-  cachedMetadata = {
-    totalRecords: cachedData.length,
-    features: featureNames.length,
-    targetVariable: targetVar,  
-    classDistribution,
-    missingValues: missingCount,
-    featureTypes: { numeric: featureNames.length }
-  };
+  // Start loading
+  isLoading = true;
   
+  loadPromise = (async () => {
+    try {
+      console.log('Fetching data from Supabase...');
+      const { data, error } = await supabase
+        .from('diabetes_health')
+        .select('*');
+
+      if (error) {
+        console.error('Error fetching data from Supabase:', error);
+        throw error;
+      }
+
+      console.log(`Fetched ${data.length} records from Supabase`);
+
+      // Transform column names to match expected format (camelCase)
+      cachedData = data.map(row => ({
+        Diabetes: row.Diabetes,
+        HighBP: row.HighBP,
+        HighChol: row.HighChol,
+        CholCheck: row.CholCheck,
+        BMI: row.BMI,
+        Smoker: row.Smoker,
+        Stroke: row.Stroke,
+        HeartDiseaseorAttack: row.HeartDiseaseorAttack,
+        PhysActivity: row.PhysActivity,
+        Fruits: row.Fruits,
+        Veggies: row.Veggies,
+        HvyAlcoholConsump: row.HvyAlcoholConsump,
+        AnyHealthcare: row.AnyHealthcare,
+        NoDocbcCost: row.NoDocbcCost,
+        GenHlth: row.GenHlth,
+        MentHlth: row.MentHlth,
+        PhysHlth: row.PhysHlth,
+        DiffWalk: row.DiffWalk,
+        Sex: row.Sex,
+        Age: row.Age,
+        Education: row.Education,
+        Income: row.Income
+      }));
+
+      console.log('Data cached successfully');
+      isLoading = false;
+      return cachedData;
+    } catch (error) {
+      console.error('Failed to load data from Supabase:', error);
+      isLoading = false;
+      cachedData = [];
+      return [];
+    }
+  })();
+
+  return loadPromise;
+};
+
+/**
+ * Get cached data (synchronous)
+ * Returns null if data not yet loaded
+ */
+export const getCachedData = () => {
   return cachedData;
 };
 
-export const getData = () => cachedData;
-export const getMetadata = () => cachedMetadata;
+/**
+ * Clear the cache (useful for refreshing data)
+ */
+export const clearCache = () => {
+  cachedData = null;
+  isLoading = false;
+  loadPromise = null;
+};
 
+/**
+ * Get data (waits for cache if needed)
+ */
+export const getData = async () => {
+  if (cachedData) {
+    return cachedData;
+  }
+  return await cacheData();
+};
+
+/**
+ * Get metadata about the dataset
+ */
+export const getMetadata = () => {
+  const data = getCachedData();
+  if (!data) return null;
+
+  const targetVar = 'Diabetes';
+  const negativeCount = data.filter(row => row[targetVar] === 0).length;
+  const positiveCount = data.filter(row => row[targetVar] === 1 || row[targetVar] === 2).length;
+
+  return {
+    totalRecords: data.length,
+    features: Object.keys(data[0] || {}).length - 1,
+    targetVariable: targetVar,
+    classDistribution: {
+      negative: negativeCount,
+      positive: positiveCount
+    },
+    missingValues: 0
+  };
+};
 /**
  * Calculate Pearson correlation coefficient between two features
  */
 export const calculateCorrelation = (feature1, feature2) => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
-  const validData = cachedData.filter(row => {
+  const validData = data.filter(row => {
     const val1 = row[feature1];
     const val2 = row[feature2];
     return val1 !== null && val1 !== undefined && val1 !== '' &&
@@ -116,7 +190,8 @@ export const calculateCorrelation = (feature1, feature2) => {
  * Calculate age-binned diabetes risk across age categories
  */
 export const calculateAgeBinnedRisk = () => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
   const ageBins = {};
   
@@ -131,7 +206,7 @@ export const calculateAgeBinnedRisk = () => {
   }
 
   // Count data points in each bin
-  cachedData.forEach(row => {
+  data.forEach(row => {
     const age = row.Age;
     const outcome = row[targetVar];
     
@@ -161,7 +236,8 @@ export const calculateAgeBinnedRisk = () => {
  * PhysActivity: 0 = inactive, 1 = active
  */
 export const calculatePhysActivityImpact = () => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
   const activeData = {
     total: 0,
@@ -175,7 +251,7 @@ export const calculatePhysActivityImpact = () => {
     nonDiabetic: 0
   };
 
-  cachedData.forEach(row => {
+  data.forEach(row => {
     const physActivity = row.PhysActivity;
     const outcome = row[targetVar];
     
@@ -237,11 +313,12 @@ export const calculatePhysActivityImpact = () => {
  * Calculate class distribution for target variable
  */
 export const calculateClassDistribution = () => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
   return {
-    negative: cachedData.filter(row => row[targetVar] === 0 || row[targetVar] === '0').length,
-    positive: cachedData.filter(row => row[targetVar] === 1 || row[targetVar] === '1' || row[targetVar] === 2 || row[targetVar] === '2').length
+    negative: data.filter(row => row[targetVar] === 0 || row[targetVar] === '0').length,
+    positive: data.filter(row => row[targetVar] === 1 || row[targetVar] === '1' || row[targetVar] === 2 || row[targetVar] === '2').length
   };
 };
 
@@ -249,10 +326,11 @@ export const calculateClassDistribution = () => {
  * Count missing values in dataset
  */
 export const countMissingValues = (columns) => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
   let missingCount = 0;
-  cachedData.forEach(row => {
+  data.forEach(row => {
     columns.forEach(col => {
       const val = row[col];
       if (val === null || val === undefined || val === '' || (typeof val === 'number' && isNaN(val))) {
@@ -286,7 +364,8 @@ export const calculateKeyCorrelations = (featureNames) => {
  * Calculate mosaic plot data for age groups and smoking status with diabetes outcomes
  */
 export const calculateAgeSmokingData = () => {
-  if (!cachedData) throw new Error('Data not loaded');
+  const data = getCachedData();
+  if (!data) return null;
 
   const smokingCategories = ['Non-Smoker', 'Smoker'];
 
@@ -313,7 +392,7 @@ export const calculateAgeSmokingData = () => {
   let totalRecords = 0;
 
   // Populate data
-  cachedData.forEach(row => {
+  data.forEach(row => {
     const age = row.Age;
     const smoker = row.Smoker;
     const outcome = row[targetVar];
@@ -351,9 +430,7 @@ export const calculateAgeSmokingData = () => {
 };
 
 export const calculateClassImbalanceData = () => {
-  if (!cachedData) throw new Error('Data not loaded');
-
-  const classDistribution = calculateClassDistribution(targetVar);
+  const classDistribution = calculateClassDistribution();
   const imbalanceRatio = classDistribution.positive > 0 
     ? (classDistribution.negative / classDistribution.positive).toFixed(2)
     : '0';
@@ -368,8 +445,8 @@ export const calculateClassImbalanceData = () => {
  * Calculate risk factor prevalence among diabetic vs non-diabetic populations
  */
 export const calculateDiabeticRiskProfile = () => {
-  const data = getData();
-  const targetVar = 'Diabetes';
+  const data = getCachedData();
+  if (!data) return null;
   
   const factors = {
     'High BP': 'HighBP',
@@ -430,7 +507,8 @@ export const calculateDiabeticRiskProfile = () => {
  * Calculate average age category
  */
 export const getAverageAge = () => {
-  const data = getData();
+  const data = getCachedData();
+  if (!data) return null;
   
   const ageLabels = {
     1: '18-24', 2: '25-29', 3: '30-34', 4: '35-39',
@@ -451,7 +529,8 @@ export const getAverageAge = () => {
  * Calculate average BMI
  */
 export const getAverageBMI = () => {
-  const data = getData();
+  const data = getCachedData();
+  if (!data) return null;
   
   const totalBMI = data.reduce((sum, row) => sum + (row.BMI || 0), 0);
   const avgBMI = (totalBMI / data.length).toFixed(1);
@@ -463,7 +542,8 @@ export const getAverageBMI = () => {
  * Calculate average income category
  */
 export const getAverageIncome = () => {
-  const data = getData();
+  const data = getCachedData();
+  if (!data) return null;
   
   const incomeLabels = {
     1: '<$10k',

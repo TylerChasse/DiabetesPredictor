@@ -1,31 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { cacheData } from '../utils/DataAnalysis';
 import styles from '../styles/Dashboard.module.css';
 import MetadataSection from '../components/MetadataSection';
 import AnalyticsSection from '../components/analytics/AnalyticsSection';
 import VisualizationsSection from '../components/visualizations/VisualizationsSection';
-import { loadData } from '../utils/DataAnalysis';
 
 const Dashboard = () => {
-  const [dataLoaded, setDataLoaded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const initData = async () => {
+    const loadData = async () => {
       try {
+        console.log('Dashboard: Loading data...');
         setProgress(30);
-        await loadData();
-        setProgress(90);
-        await new Promise(res => setTimeout(res, 500)); // Simulate processing delay
-        setDataLoaded(true);
-      } catch (error) {
-        console.error(error);
-      } finally {
+        await cacheData();
+        setProgress(100);
+        console.log('Dashboard: Data loaded successfully');
+        setLoading(false);
+      } catch (err) {
+        console.error('Dashboard: Error loading data:', err);
+        setError('Failed to load data from database');
         setLoading(false);
       }
     };
-    setProgress(100);
-    initData();
+
+    loadData();
   }, []);
 
   if (loading) {
@@ -39,17 +39,6 @@ const Dashboard = () => {
           </div>
           <p className={styles.progressText}>{progress}%</p>
           <p className={styles.loadingHint}>Processing diabetes health indicators dataset</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!dataLoaded) {
-    return (
-      <div className={styles.container}>
-        <div className={styles.errorContainer}>
-          <h2>⚠️ Error Loading Data</h2>
-          <p>{error}</p>
         </div>
       </div>
     );

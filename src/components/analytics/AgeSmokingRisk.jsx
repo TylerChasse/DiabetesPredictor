@@ -46,14 +46,6 @@ const AgeSmokingRisk = () => {
     return { label: group.label, rate };
   });
 
-  const highestRiskAge = ageGroupRates.reduce((max, curr) => 
-    curr.rate > max.rate ? curr : max
-  );
-  
-  const lowestRiskAge = ageGroupRates.reduce((min, curr) => 
-    curr.rate < min.rate ? curr : min
-  );
-
   return (
     <div className={styles.analysisCard}>
       <h3 className={styles.analysisTitle}>Smoking Risk Analysis</h3>
