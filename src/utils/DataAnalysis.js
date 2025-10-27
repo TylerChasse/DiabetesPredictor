@@ -37,11 +37,6 @@ export const cacheData = async () => {
     return loadPromise;
   }
 
-  // If already cached, return immediately
-  if (cachedData) {
-    return cachedData;
-  }
-
   // Start loading
   isLoading = true;
   
