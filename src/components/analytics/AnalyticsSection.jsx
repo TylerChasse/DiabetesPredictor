@@ -14,11 +14,11 @@ const AnalyticsSection = () => {
       <h2 className={styles.sectionTitle}>STATISTICAL ANALYSIS</h2>
       <div className={styles.analysisGrid}>
         <AgeBinnedRisk />
+        <AgeSmokingRisk />
         <RiskFactors />
+        <BmiRiskAnalysis />
         <LeastRiskFactors />
         <PhysActivityImpact />
-        <AgeSmokingRisk />
-        <BmiRiskAnalysis />
         {/* Add more analytics here */}
       </div>
     </section>

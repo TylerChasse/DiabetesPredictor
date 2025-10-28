@@ -14,9 +14,9 @@ const VisualizationsSection = () => {
       <h2 className={styles.sectionTitle}>DATA VISUALIZATIONS</h2>
       <div className={styles.visualizationGrid}>
         <AgeBinnedChart />
-        <RiskProfileRadar />
-        <AgeSmokingMosaic />
         <PhysActivityChart />
+        <AgeSmokingMosaic />
+        <RiskProfileRadar />
         <IncomeBmiHexbin />
         <GenHealthEduHexbin />
         <ModelComparison />

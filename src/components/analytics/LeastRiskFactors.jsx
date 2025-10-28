@@ -69,11 +69,11 @@ const LeastRiskFactors = () => {
       <div style={{
         marginTop: '16px',
         padding: '12px',
-        backgroundColor: '#f7fafc',
+        backgroundColor: '#fef2f2',
         borderRadius: '8px',
-        borderLeft: '4px solid #718096'
+        borderLeft: '4px solid #f56565'
       }}>
-        <p style={{ margin: 0, fontSize: '14px', color: '#2d3748' }}>
+        <p style={{ margin: 0, fontSize: '14px', color: '#991b1b' }}>
           <strong>Key Insight:</strong> {leastRelevant[0].factor} shows only {leastRelevant[0].difference}%
           difference between groups, making it the weakest indicator.
         </p>
