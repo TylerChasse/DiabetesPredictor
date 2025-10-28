@@ -33,9 +33,9 @@ const InputForm = ({ onPredict }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const validationRules = {
-    BMI: { min: 12, max: 95, required: true, type: 'number' },
-    MentHlth: { min: 0, max: 30, required: true, type: 'number' },
-    PhysHlth: { min: 0, max: 30, required: true, type: 'number' },
+    BMI: { min: 12, max: 95, required: true, type: 'float' },
+    MentHlth: { min: 0, max: 30, required: true, type: 'integer' },
+    PhysHlth: { min: 0, max: 30, required: true, type: 'integer' },
     Age: { required: true, type: 'select' },
     HeartDiseaseorAttack: { required: true, type: 'select' },
     HighBP: { required: true, type: 'select' },
@@ -61,12 +61,22 @@ const InputForm = ({ onPredict }) => {
     if (rules.required && (value === '' || value === null || value === undefined)) {
       return 'Required';
     }
-    if (rules.type === 'number') {
+    
+    if (rules.type === 'float') {
       const numValue = parseFloat(value);
       if (isNaN(numValue)) return 'Invalid number';
       if (rules.min !== undefined && numValue < rules.min) return `Min: ${rules.min}`;
       if (rules.max !== undefined && numValue > rules.max) return `Max: ${rules.max}`;
     }
+    
+    if (rules.type === 'integer') {
+      const numValue = parseFloat(value);
+      if (isNaN(numValue)) return 'Invalid number';
+      if (!Number.isInteger(numValue)) return 'Must be a whole number';
+      if (rules.min !== undefined && numValue < rules.min) return `Min: ${rules.min}`;
+      if (rules.max !== undefined && numValue > rules.max) return `Max: ${rules.max}`;
+    }
+
     return '';
   };
 
