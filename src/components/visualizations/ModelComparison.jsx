@@ -26,7 +26,7 @@ const ModelComparison = () => {
 
   if (!models) {
     return (
-      <div className={styles.visualizationCardWide}>
+      <div className={styles.visualizationCardWider}>
         <h3 className={styles.visualizationTitle}>Model Performance Comparison</h3>
         <div className={styles.chartPlaceholder}>
           <div className={styles.chartIcon}>📊</div>
@@ -54,7 +54,7 @@ const ModelComparison = () => {
   const knnCM = calculateCMPercentages(knn.metrics.confusion_matrix);
 
   return (
-    <div className={styles.visualizationCardWide}>
+    <div className={styles.visualizationCardWider}>
       <h3 className={styles.visualizationTitle}>Model Performance Comparison</h3>
       <p className={styles.chartSubtitle}>
         Decision Tree vs K-Nearest Neighbors - Metrics & Confusion Matrix Analysis
