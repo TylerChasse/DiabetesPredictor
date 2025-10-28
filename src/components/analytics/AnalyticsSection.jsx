@@ -5,6 +5,8 @@ import AgeBinnedRisk from './AgeBinnedRisk';
 import PhysActivityImpact from './PhysActivityRisk';
 import AgeSmokingRisk from './AgeSmokingRisk';
 import RiskFactors from './RiskFactors';
+import BmiRiskAnalysis from './BmiRiskAnalysis';
+import LeastRiskFactors from './LeastRiskFactors';
 
 const AnalyticsSection = () => {
   return (
@@ -13,8 +15,10 @@ const AnalyticsSection = () => {
       <div className={styles.analysisGrid}>
         <AgeBinnedRisk />
         <RiskFactors />
+        <LeastRiskFactors />
         <PhysActivityImpact />
         <AgeSmokingRisk />
+        <BmiRiskAnalysis />
         {/* Add more analytics here */}
       </div>
     </section>

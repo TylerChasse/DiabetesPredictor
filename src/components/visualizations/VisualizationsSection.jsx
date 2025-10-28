@@ -4,6 +4,8 @@ import AgeBinnedChart from './AgeBinnedChart';
 import PhysActivityChart from './PhysActivityChart';
 import AgeSmokingMosaic from './AgeSmokingMosaic';
 import RiskProfileRadar from './RiskProfileRadar';
+import IncomeBmiHexbin from './IncomeBmiHexbin';
+import GenHealthEduHexbin from './GenHealthEduHexbin';
 
 const VisualizationsSection = () => {
   return (
@@ -14,6 +16,8 @@ const VisualizationsSection = () => {
         <RiskProfileRadar />
         <AgeSmokingMosaic />
         <PhysActivityChart />
+        <IncomeBmiHexbin />
+        <GenHealthEduHexbin />
         {/* Add more visualizations here*/}
       </div>
     </section>
