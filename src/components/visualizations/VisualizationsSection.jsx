@@ -6,6 +6,7 @@ import AgeSmokingMosaic from './AgeSmokingMosaic';
 import RiskProfileRadar from './RiskProfileRadar';
 import IncomeBmiHexbin from './IncomeBmiHexbin';
 import GenHealthEduHexbin from './GenHealthEduHexbin';
+import ModelComparison from './ModelComparison';
 
 const VisualizationsSection = () => {
   return (
@@ -18,6 +19,7 @@ const VisualizationsSection = () => {
         <PhysActivityChart />
         <IncomeBmiHexbin />
         <GenHealthEduHexbin />
+        <ModelComparison />
         {/* Add more visualizations here*/}
       </div>
     </section>

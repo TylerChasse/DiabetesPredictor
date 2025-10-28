@@ -1,3 +1,7 @@
+## Deployed Website Link
+
+https://diabetesriskpredictor.netlify.app/
+
 ## Setup and Installation Instructions
 
 Need the following installed:
@@ -14,6 +18,7 @@ Need the following installed:
 - Navigate to link provided in a browser. For example "http://localhost:5173".
 
 ### Data Flow
+
 - Dashboard.jsx calls loadData() which lives in utils/DataAnalysis.js
 - loadData() fetches and parses the dataset csv file and caches it along with the gathered metadata
 - Calculation functions within DataAnalysis.js can used cachedData when making calculations
@@ -27,7 +32,7 @@ Need the following installed:
 - In your analytic/visualization file import this function and call it using UseMemo (see above)
 - Use the returned data within your analytic/visualization
 - Add you analytic/visualization into its respective AnalyticsSection/VisualizationsSection
-- Any new css that's needed can be added to the respective AnalyticsSection/VisualizationsSection module.css file in the styles folder 
+- Any new css that's needed can be added to the respective AnalyticsSection/VisualizationsSection module.css file in the styles folder
 
 ### Database Column Explanations
 
